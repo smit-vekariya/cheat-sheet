@@ -1,0 +1,22 @@
+git add .
+git status
+git commit -m "new commit"
+git pull
+git push
+
+https://stackoverflow.com/questions/68775869/message-support-for-password-authentication-was-removed
+https://github.com/settings/tokens/new
+
+authenticationtoken for apiprime: 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
+smit-vekariya => authenticationtoken for bondclick: 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
+-------------------------------------
+
+git rm --cached '*.pyc'
+git commit -m "Remove tracked .pyc files"
+
+git add .gitignore
+git commit -m "Update .gitignore to ignore .pyc files"
+git push origin <branch-name>
+
+git config --list
+
