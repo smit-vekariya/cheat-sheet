@@ -11,9 +11,9 @@ AWS provides the fundamental components crucial for cloud computing such as EC2 
 
 > 3.  What Is An EC2 Instance And How Does It Work?
 
-Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud.An EC2 instance stands for Elastic Cloud Compute service, It is a virtual server in the cloud. When we launch this, it will run the selected operating system with a specified application stack. For instance, you can deploy a web server or a database in this EC2 service. It can also be configured for specific computing needs, making it a flexible and scalable solution.
+Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud. It is a virtual server in the cloud. When we launch this, it will run the selected operating system with a specified application stack. For instance, you can deploy a web server or a database in this EC2 service. It can also be configured for specific computing needs, making it a flexible and scalable solution.
 
-> 4. . Describe The Difference Between S3 And EBS In AWS.
+> 4. Describe The Difference Between S3 And EBS In AWS.
 
 S3 ( Simple Storage Service ) is an object storage service suitable for storing various data types of files that can accessed through the internet. In contrast, EBS ( Elastic Block storage ) is a block-level storage attached to EC2 instances, offering persistent and high-performance storage for applications like databases. EBS provides the raw storage hardware helpful for I/O operations where as S3 comes with pre configured file system. For understaning think of S3 as a file storage system and EBS as a hard drive.
 
