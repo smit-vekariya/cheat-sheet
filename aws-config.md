@@ -37,9 +37,14 @@ AWS Elastic Beanstalk is a AWS managed service helps in providing simplifyed app
 
 > 9. What Is Amazon VPC And How Does It Help In Securing Your Resources?
 
+https://aws.amazon.com/vpc/ \
+https://aws.amazon.com/vpc/features/
+
 Amazon VPC ( Virutal Private Cloud ) is an AWS service that helps the users to create isolated networks within AWS account through customizing IP address ranges and the defining their subnets. It helps in enhancing the security through controlling both the inbound and outbound of the traffic. For example, To host the web servers in public subnets and connecting to the databases placing in private subnets can be on configuring the VPC. It provides an additional layer of network security to the applications.
 
 > 10. Describe The Use Of Amazon Route 53.
+
+https://avinetworks.com/glossary/aws-route-53/
 
 AWS Route 53 is a scalable and highly available Domain Name System (DNS) web service. It plays a crucial role in DevOps by managing domain names, routing traffic to resources like EC2 instances, load balancers, and providing health checks to ensure high availability
 
@@ -54,3 +59,50 @@ AWS Elastic Beanstalk and EC2 are both services provided by Amazon Web Services,
 When should I use AWS Elastic Beanstalk instead of EC2?
 
 Elastic Beanstalk is ideal for developers who want to deploy and manage applications in the AWS Cloud but don’t want to worry about the infrastructure that runs those applications. It provides an environment to easily deploy and run applications in the language of your choice. If you want more control over the underlying infrastructure, EC2 would be a better choice.
+
+> 12. What is EC2 in AWS, explain every thing that what is that and how its work with example of deploy in django.
+
+EC2 stands for Elastic Compute Cloud. It's a web service offered by Amazon Web Services (AWS) that provides scalable, on-demand virtual computers (VMs) in the cloud. You can launch these VMs with various configurations of CPU, memory, storage, and operating system to run your applications.
+
+```Key Benefits of EC2:```
+
+1. Scalability: Easily scale your compute resources up or down to meet changing application demands. You only pay for what you use.
+2. Elasticity: Provision and configure VMs in minutes, eliminating the need to manage physical servers.
+3. Cost-Effectiveness: Pay-as-you-go model ensures you're not paying for idle resources.
+4. Wide Range of Options: Choose from a vast selection of instance types optimized for different workloads, including compute-intensive, memory-intensive, and storage-intensive applications.
+5. Security: Leverage industry-leading security features to protect your applications and data in the cloud.
+6. Integration: EC2 integrates seamlessly with other AWS services like S3 storage, RDS databases, and VPC networking for a comprehensive cloud solution.
+
+```How EC2 Works:```
+
+1. Choose an Instance Type: Select an instance type that aligns with your application's resource requirements (CPU, memory, storage, etc.). EC2 offers a wide range of options to ensure a cost-effective fit.
+2. Launch Your Instance: Use the AWS Management Console, AWS SDK, or command-line interface to launch an instance. This creates a virtual server in the cloud.
+3. Configure Your Instance: Set up the operating system, install necessary software (like your Django framework), and configure your application to run on the instance.
+4. Secure Your Instance: Implement security groups to control inbound and outbound network traffic.
+5. Access Your Instance: Connect to your instance using SSH (for Linux) or Remote Desktop (for Windows) to manage your application.
+6. Deploy Your Django Application: Transfer your Django project files to the instance, configure settings, and start your Django server.
+7. Scale as Needed: As your application's traffic or requirements change, you can easily add or remove instances to scale your compute resources.
+
+```Django Deployment Example:```
+
+1. Create an EC2 Instance: Launch an instance with an appropriate Linux distribution (e.g., Ubuntu) and sufficient resources for your Django application.
+2. Connect to the Instance: Use SSH to connect to your instance and establish a secure connection.
+3. Install Dependencies: Use a package manager like apt-get or yum to install necessary software like Python, Django, and any other required libraries.
+4. Transfer Your Django Project: Upload your Django application files to the instance using methods like scp or S3 file transfer.
+5. Configure Django Settings: Edit your Django settings file (settings.py) to specify database connections, secret keys, and other application-specific parameters.
+6. Set Up a Database (Optional): If your Django application needs a database, you can use a service like Amazon RDS (Relational Database Service) or configure a database server on your instance.
+7. Collect Static Files: Run python manage.py collectstatic to gather static files (CSS, JavaScript, images) and place them in the appropriate Django static directory.
+8. Run Migrations (Optional): If you're using a database, execute python manage.py makemigrations and python manage.py migrate to create and apply database schema changes.
+9. Start the Django Development Server (Optional): For testing purposes, you can run python manage.py runserver 0.0.0.0:8000 (replace 8000 with your desired port) to start the Django development server. This makes your application accessible locally on the instance.
+10. Configure a Web Server (Production): For production deployment, use a web server like Apache or Nginx to serve your Django application. Configure the web server to point to your Django application's WSGI file (typically wsgi.py).
+11. Security Considerations: Implement security best practices like using HTTPS and access control mechanisms to protect your application from unauthorized access.
+
+```Additional Considerations:```
+
+1. Load Balancing: As you scale your deployment, consider using an AWS service like Elastic Load Balancing to distribute traffic across multiple EC2 instances for improved performance and redundancy.
+2. Automatic Scaling: Leverage AWS Auto Scaling to automatically adjust the number of EC2 instances based on predefined metrics like CPU utilization, ensuring your application can handle traffic spikes.
+3. Monitoring: Monitor your application's performance and resource
+
+Ec2 instance upload on ubutu and connect with remote desktop(find better way to access all file of project in editor insted of access from shell. find in youtube): https://stackoverflow.com/questions/50100360/connecting-to-aws-ec2-instance-through-remote-desktop (you can use SSH find how to use SSH in youtube)
+
+EC2 instace upload on window and connect with remote desktop: https://www.google.com/search?q=how+to+connect+remote+desktop+in+aws+ec2+instance&rlz=1C1ONGR_enIN1084IN1084&oq=how+to+connect+remote+desktop+in+aws+ec2+insrtace&gs_lcrp=EgZjaHJvbWUqCQgBECEYChigATIGCAAQRRg5MgkIARAhGAoYoAEyCQgCECEYChigATIJCAMQIRgKGKAB0gEJMTI0NjJqMGo3qAIIsAIB&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:8087a636,vid:9ypkPfRQg2o,st:74
