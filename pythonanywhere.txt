@@ -1,0 +1,38 @@
+Step for upload in pythonanywhere (For :https://github.com/smit-vekariya/BondClick.git)
+Refrense:https://youtu.be/xtnUwvjOThg?si=vPrHWKg2_FK7ml2n
+
+1. pwd
+2. git clone https://github.com/smit-vekariya/BondClick.git
+3. python -m venv venv
+4. source venv/bin/activate
+5. pip install -r requirements.txt (path : /BondClick/backend/)
+6. python manage.py collectstatic
+
+7. Add in Web section (/var/www/panelprime_pythonanywhere_com_wsgi.py file):
+	# +++++++++++ DJANGO +++++++++++
+	# To use your own django app use code like this:
+	import os
+	import sys
+	#
+	## assuming your django settings file is at '/home/panelprime/mysite/mysite/settings.py'
+	## and your manage.py is is at '/home/panelprime/mysite/manage.py'
+	path = '/home/panelprime/BondClick/backend'
+	if path not in sys.path:
+		sys.path.append(path)
+	os.environ['DJANGO_SETTINGS_MODULE'] = 'backend.settings'
+	#
+	## then:
+	from django.core.wsgi import get_wsgi_application
+	application = get_wsgi_application()
+
+8. If admin panel UI display not proper (after collectstatic):
+	->add whitenoise:
+	1. pip install whitenoise
+	2. add in middleware below "SessionMiddleware"
+		'whitenoise.middleware.WhiteNoiseMiddleware',
+	3. setup for static file:
+		STATIC_URL = '/static/'
+		STATIC_ROOT = BASE_DIR / 'static/'
+		STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+	4. run "python manage.py collectstatic" again if needed
+	

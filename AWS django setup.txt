@@ -1,0 +1,84 @@
+Refrence video for this step:(https://youtu.be/7O1H9kr1CsA?si=9FSVhpeQOMrZaLoT)
+Example of ApiPrime project:(https://github.com/jignesh-kaviraj/ApiPrime.git)
+ 
+1. for update ubuntu service:
+- sudo apt-get update
+- sudo apt-get upgrade
+
+click enter if pink popup is open
+
+2. setup project:
+- sudo apt-get install python3-venv
+
+- python3 -m venv venv
+- source venv/bin/activate
+- pip3 install django
+- git clone https://github.com/jignesh-kaviraj/ApiPrime.git
+- cd ApiPrime
+	- pip install -r requirements.txt (from your app)
+	- cd ..
+
+- sudo apt-get install -y nginx
+- pip install gunicorn
+- sudo apt-get install supervisor
+
+- cd /etc/supervisor/conf.d/
+	- sudo touch gunicorn.conf
+	- sudo nano gunicorn.conf (now you are in console for create gunicorn connection)
+		-> add this in file:
+				[program:gunicorn]
+				directory=/home/ubuntu/ApiPrime
+				command=/home/ubuntu/venv/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/ApiPrime/app.sock ApiPrime.wsgi:application  
+				autostart=true
+				autorestart=true
+				stderr_logfile=/var/log/gunicorn/gunicorn.err.log
+				stdout_logfile=/var/log/gunicorn/gunicorn.out.log
+
+				[group:guni]
+				programs:gunicorn
+		-> press (ctrl+o) and (enter) and then (ctrl+x)
+	- sudo mkdir /var/log/gunicorn
+	- sudo supervisorctl reread (response will be "guni:avaliable")
+	- sudo supervisorctl update (response will be "guni: added process group")
+	- sudo supervisorctl status (response will be "RUNNING")
+	- cd ..
+	- cd .. (now your current directory is "etc")
+	- cd nginx (current directory "etc/nginx")
+	- sudo nano nginx.conf (now you are in console for create nginx connection)
+		-> update this in file:
+			change "user www-data" to "user root" (for example we use "root")
+		-> press (ctrl+o) and (enter) and then (ctrl+x)
+	- cd sites-available (current directory "/etc/nginx/sites-avaliable")
+	- sudo touch django.conf
+	- sudo nano django.conf (now you are in console for create djnago connection)
+		-> add this in file ("13.233.67.225" is public ip provide by aws):
+			server{
+				listen 80;
+				server_name 13.235.42.17;
+
+				location / {
+
+					include proxy_params;
+					proxy_pass http://unix:/home/ubuntu/ApiPrime/app.sock;
+
+				}
+
+			}
+		-> press (ctrl+o) and (enter) and then (ctrl+x)
+	- sudo nginx -t
+	- sudo ln django.conf /etc/nginx/sites-enabled
+	- sudo service nginx restart
+		
+		
+->If getting 502 BAD GETWAY(nginx) try run project on runserver and find bug
+-> apiprime aws project run on port 80
+		
+Please note that you will have to setup your static and media files as well - I'd suggest using Amazon S3.
+Here is a tutorial on how to setup Amazon S3:
+https://www.youtube.com/watch?v=JQVQcNN0cXE
+
+
+You will also have to setup your database as well - I'd recommend using a PostgreSQL database.
+Here is a tutorial on how to setup a PostgreSQL database with Render for FREE:
+https://www.youtube.com/watch?v=AgTr5mw4zdI
+

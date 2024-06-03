@@ -1,0 +1,8 @@
+This is because of initialized git repository in your frontend folder, git is considering it as a submodule. solution :
+
+step 1. Delete .git folder manually present in your frontend folder.
+step 2. type "git rm --cached YourFrontendFolderName" in cmd
+step 3. type "git add YourFrontendFolderName" in cmd
+step 4. type "git push " in cmd
+Note : you can also write commit message after git add and all commands are written in main folder where both frontend and backend are located.
+I got same error today and this worked for me. You can upvote if worked for you.
