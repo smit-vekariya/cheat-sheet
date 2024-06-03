@@ -106,3 +106,35 @@ EC2 stands for Elastic Compute Cloud. It's a web service offered by Amazon Web S
 Ec2 instance upload on ubutu and connect with remote desktop(find better way to access all file of project in editor insted of access from shell. find in youtube): https://stackoverflow.com/questions/50100360/connecting-to-aws-ec2-instance-through-remote-desktop (you can use SSH find how to use SSH in youtube)
 
 EC2 instace upload on window and connect with remote desktop: https://www.google.com/search?q=how+to+connect+remote+desktop+in+aws+ec2+instance&rlz=1C1ONGR_enIN1084IN1084&oq=how+to+connect+remote+desktop+in+aws+ec2+insrtace&gs_lcrp=EgZjaHJvbWUqCQgBECEYChigATIGCAAQRRg5MgkIARAhGAoYoAEyCQgCECEYChigATIJCAMQIRgKGKAB0gEJMTI0NjJqMGo3qAIIsAIB&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:8087a636,vid:9ypkPfRQg2o,st:74
+
+> 13. What is AWS Elastic Beanstalk? How Elastic Beanstalk Works and how its diffrent from EC2 instanc.
+
+Deploy on EB : https://www.w3schools.com/django/django_deploy_provider.php
+
+Elastic Beanstalk is a Platform-as-a-Service (PaaS) offering from Amazon Web Services (AWS). It simplifies the deployment and management of web applications and services by taking care of the underlying infrastructure. Instead of manually provisioning and configuring servers, Elastic Beanstalk automates this process, allowing you to focus on your application code.
+
+How Elastic Beanstalk Works
+
+1. Create an Application: You define an application in Elastic Beanstalk, specifying details like the programming language, framework (e.g., Django), and environment configuration.
+2. Prepare Your Application Code: Package your Django application code into a deployment archive (e.g., a ZIP file containing your project structure).
+3. Configure Your Environment: Define the resources your application needs, such as the EC2 instance type, number of instances, security groups, and application settings.
+4. Deploy Your Application: Upload your application archive to Elastic Beanstalk. It automatically provisions the necessary AWS resources (EC2 instances, S3 buckets, security groups, etc.) based on your configuration.
+5. Manage Your Application: Elastic Beanstalk provides tools for monitoring your application's health, deploying new versions, scaling resources, and managing logs.
+
+Benefits of Using Elastic Beanstalk with Django
+
+1. Simplified Deployment: Focus on writing code instead of managing infrastructure.
+2. Automatic Scaling: Elastic Beanstalk can automatically scale resources up or down to handle changing traffic patterns.
+3. Easy Management: Manage your application versions, deployments, and logs from a central console.
+4. Cost-Effective: Pay only for the resources you use, with options for auto-scaling and reserved instances to optimize costs.
+
+Additional Considerations
+
+1. Security: Configure security groups, IAM roles, and other security measures to protect your application.
+2. Database: You'll need to set up a separate database service like Amazon RDS to store your application's data.
+3. Static Files: Configure Elastic Beanstalk to serve static files (CSS, JavaScript, images) efficiently.
+
+EC2 (Elastic Compute Cloud):  Provides virtual servers that you can fully configure and manage.  Think of it as renting a bare-metal server that you have complete control over. You're responsible for everything from the operating system to the security patches. EC2 offers maximum flexibility and control, but requires a lot of technical expertise to manage.
+
+Elastic Beanstalk (EB):  A higher-level service that sits on top of EC2. It simplifies deployment and management of your applications.  EB handles provisioning the servers (EC2 instances), setting up scaling, and other infrastructure tasks.  This lets you focus on developing your application code.  EB is easier to use, but offers less control over the underlying infrastructure.
+
