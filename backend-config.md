@@ -4,7 +4,9 @@
 > 3. For all type of decorator : https://www.w3resource.com/python-exercises/decorator/index.php
 > 4. DRF cheet sheet:\
     1. https://github.com/Nifled/drf-cheat-sheet?tab=readme-ov-file \
-    2. https://djangocentral.com/django-rest-framework-cheat-sheet/ 
+    2. https://djangocentral.com/django-rest-framework-cheat-sheet/
+> 5. Django interview questions:\
+    1. https://codersdaily.in/courses/django-rest-framework-tutorial/introduction-to-django-rest-framework
 
 
 # Revision Questions
