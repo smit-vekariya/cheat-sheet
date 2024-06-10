@@ -1,14 +1,19 @@
 Step for upload in pythonanywhere (For :https://github.com/smit-vekariya/BondClick.git)
 Refrense:https://youtu.be/xtnUwvjOThg?si=vPrHWKg2_FK7ml2n
 
-1. pwd
+1. 'pwd' for path and 'ls' for file listing
 2. git clone https://github.com/smit-vekariya/BondClick.git
 3. python -m venv venv
 4. source venv/bin/activate
 5. pip install -r requirements.txt (path : /BondClick/backend/)
 6. python manage.py collectstatic
 
-7. Add in Web section (/var/www/panelprime_pythonanywhere_com_wsgi.py file):
+7. Add in Web section
+	add virtual env path in
+	Virtualenv:
+	/home/panelprime/venv
+	
+8. Add in Web section (/var/www/panelprime_pythonanywhere_com_wsgi.py file):
 	# +++++++++++ DJANGO +++++++++++
 	# To use your own django app use code like this:
 	import os
@@ -25,7 +30,7 @@ Refrense:https://youtu.be/xtnUwvjOThg?si=vPrHWKg2_FK7ml2n
 	from django.core.wsgi import get_wsgi_application
 	application = get_wsgi_application()
 
-8. If admin panel UI display not proper (after collectstatic):
+9. If admin panel UI display not proper (after collectstatic):
 	->add whitenoise:
 	1. pip install whitenoise
 	2. add in middleware below "SessionMiddleware"
