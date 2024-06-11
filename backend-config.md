@@ -99,7 +99,7 @@ This includes characteristics like:\
 Statelessness (each request contains all necessary information)\
 Client-server architecture\
 Uniform interface (consistent way to interact with resources)\
-RESTful APIs are considered more reliable and predictable compared to regular REST APIs, making them ideal for complex, large-scale systems.\
+RESTful APIs are considered more reliable and predictable compared to regular REST APIs, making them ideal for complex, large-scale systems.
 
 In short:\
 All RESTful APIs are REST APIs, but not all REST APIs are strictly RESTful.\
@@ -108,4 +108,81 @@ REST APIs offer flexibility, while RESTful APIs provide more standardization and
 Here's an analogy:\
 Think of an API as a language for two programs to talk to each other.\
 REST API is like a specific dialect of that language, with some basic rules.\
-RESTful API is like following all the grammatical rules perfectly within that dialect.\
+RESTful API is like following all the grammatical rules perfectly within that dialect.
+
+> 3. what is celery.
+
+https://www.geeksforgeeks.org/celery-integration-with-django/
+
+Celery is an asynchronous task queue or job queue based on distributed message passing. It is used in Python to execute tasks asynchronously. Celery is used to offload long-running tasks from the main request/response cycle within Django. Using Celery becomes critical when your app starts to scale or you need better performance out of Django.
+Celery works by sending messages between Django applications and worker processes through a message broker, such as RabbitMQ or Redis. The message broker is responsible for delivering messages to the worker processes. The worker processes then execute the tasks that are contained in the messages.
+
+Here are some of the benefits of using Celery in Django:
+
+Improved performance:\
+Celery can improve the performance of your Django application by offloading long-running tasks to worker processes. This allows your Django application to continue to respond quickly to users while the worker processes complete the long-running tasks in the background.
+
+Increased scalability:\
+Celery can help you to scale your Django application by distributing the workload across multiple worker processes. This allows you to handle more traffic and process more requests without having to add more servers.
+
+Enhanced reliability:\
+Celery can help to improve the reliability of your Django application by providing fault tolerance. If a worker process fails, Celery will automatically reschedule the task to another worker process.\
+Overall, Celery is a powerful tool that can help you to improve the performance, scalability, and reliability of your Django application.
+
+> 4. what is redis.
+
+https://stackabuse.com/working-with-redis-in-python-with-django/
+
+Redis is an open-source, in-memory data structure store, used as a database, cache and message broker. It is known for its high performance and scalability. Redis is often used as a cache in Django applications to improve performance by storing frequently accessed data in memory.
+Django is a Python web framework that follows the model-template-views (MTV) architectural pattern. It is used to build and maintain complex database-driven websites. Django includes a built-in cache framework that can be used with Redis.
+
+To use Redis with Django, you need to:
+
+Install Redis on your server:\
+Install the redis-py Python package.\
+Configure your Django settings to connect to the Redis server.\
+Use the Django cache framework to store and retrieve data from Redis.\
+
+Here are some of the benefits of using Redis with Django:
+
+Improved performance:\
+Redis can store data in memory, which makes it much faster than accessing data from a database.
+
+Reduced load on the database:\
+By storing frequently accessed data in Redis, you can reduce the load on your database server.
+
+Scalability:\
+Redis is a scalable solution that can handle large amounts of data and traffic.
+
+Versatility:\
+Redis can be used for a variety of tasks, including caching, session storage, real-time messaging, and rate limiting.\
+Overall, Redis is a powerful tool that can be used to improve the performance, scalability, and versatility of Django applications.
+
+> 5. what is ElasticSearch  and how to use.
+
+https://medium.com/geekculture/how-to-use-elasticsearch-with-django-ff49fe02b58d#:~:text=Elasticsearch%20is%20a%20search%20engine,Elasticsearch%20is%20developed%20in%20Java.
+
+Elasticsearch is a search engine based on the Lucene library. It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java.
+
+Elasticsearch allows you to store, search, and analyze huge volumes of data quickly and in near real-time and give back answers in milliseconds. It’s able to achieve fast search responses because instead of searching the text directly, it searches an index.
+
+> 6. what is docker and how that work with django.
+
+https://chatgpt.com/share/ea69a00d-bfe4-49ec-a02d-3d22764fc50b
+
+
+Docker is an open-source platform that enables developers to automate the deployment, scaling, and management of applications using containerization. Containers are lightweight, standalone, executable software packages that include everything needed to run an application: code, runtime, libraries, and system tools. Docker ensures that the application runs uniformly across different environments, whether it’s development, testing, or production.
+
+Key Concepts of Docker:
+
+Image: A read-only template with instructions for creating a container. Images are built from a set of instructions written in a Dockerfile.\
+Container: A runnable instance of an image. Containers can be started, stopped, moved, and deleted. Each container is isolated but can communicate with other containers.\
+Dockerfile: A text file that contains a set of instructions to build a Docker image. It specifies the base image, application code, dependencies, and commands to run the application.\
+Docker Hub: A cloud-based repository where Docker users can create, test, store, and distribute Docker images.
+
+Benefits of Using Docker with Django:
+
+Consistency: Docker ensures that your application runs the same in development, testing, and production environments.\
+Isolation: Each container is isolated, meaning dependencies and configurations in one container do not affect others.\
+Scalability: Docker makes it easy to scale your application by adding more containers.\
+Simplified Deployment: With Docker, you can deploy your application as a container on any system that supports Docker.
