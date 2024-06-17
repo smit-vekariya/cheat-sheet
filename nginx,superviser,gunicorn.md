@@ -70,7 +70,7 @@ Function of Gunicorn:
 
 - Processes Django requests: Gunicorn receives incoming requests from the web server (like Nginx) and passes them to your Django application for processing.
 - Manages worker processes: Gunicorn spawns multiple worker processes to handle requests concurrently, boosting performance and handling high traffic situations efficiently.
-   Reloads code changes: Gunicorn can automatically reload your Django application code when you make changes, eliminating the need to restart the server manually.
+- Reloads code changes: Gunicorn can automatically reload your Django application code when you make changes, eliminating the need to restart the server manually.
 
 Benefits of using Gunicorn with Django Live:
 

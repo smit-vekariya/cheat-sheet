@@ -141,7 +141,7 @@ To use Redis with Django, you need to:
 Install Redis on your server:\
 Install the redis-py Python package.\
 Configure your Django settings to connect to the Redis server.\
-Use the Django cache framework to store and retrieve data from Redis.\
+Use the Django cache framework to store and retrieve data from Redis.
 
 Here are some of the benefits of using Redis with Django:
 
@@ -186,3 +186,27 @@ Consistency: Docker ensures that your application runs the same in development, 
 Isolation: Each container is isolated, meaning dependencies and configurations in one container do not affect others.\
 Scalability: Docker makes it easy to scale your application by adding more containers.\
 Simplified Deployment: With Docker, you can deploy your application as a container on any system that supports Docker.
+
+> 7. What is AsyncIO.
+
+AsyncIO is a Python library that allows you to write asynchronous code. Asynchronous code is code that can run concurrently, meaning that multiple tasks can be executed at the same time. This can be useful for tasks that take a long time to complete, such as database queries or network requests.
+
+> 8. What is asgi.py and wsgi.py in djnago and what is diffrent between them?
+
+WSGI (web server gateway interface):
+
+1. `Purpose` : define commmunication standard between web server and python web framework like django.
+2. `Functionality` : Handles the request synchronosuly, meaning it processed one request at a time and wait for it to finish before moving on to the next.
+3. `Concurrency`: Achives concurrency (handlng multiple request simultaneously) using multiple processes or threds. However, this can lead to inefficeencies and limitations, especially for long-running tasks or real time application.
+4. `Supported protocols` : Primarlity HTTP,  not ideal for Websocket or other non-Http protocol.
+5. `Django usage` : the traditional way to configure a django application fro deployment eith Wsgi server like Gunicorn or u Wsgi, you'll typically find wsgi.py file in your django project like define the WSGI application obejct.
+
+ASGI (Asynchronous server gateway interface):
+
+1. `Purpose` :  A newer standard that builds upon WSGI, enabling asynchronous programming in Python web applications.
+2. `Functionality` : Handles requests asynchronously, meaning it can initiate multiple requests concurrently without blocking the main thread. This allows for more efficient handling of long-running tasks or real-time communication.
+3. `Concurrency` : Efficiently handles concurrency, making it well-suited for applications with many clients or long-lived connections.
+4. `Supported Protocols` : Supports both HTTP and WebSockets, providing a flexible foundation for various communication needs.
+5. `Django Usage` : Since Django 3.0, Django projects can leverage ASGI for improved performance and real-time features. You might encounter an asgi.py file that defines the ASGI application object. However, Django can usually still function with a wsgi.py file for backwards compatibility with WSGI servers.
+
+
