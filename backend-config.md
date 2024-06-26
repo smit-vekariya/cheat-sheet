@@ -40,7 +40,7 @@ Method Overloading is an example of Compile time polymorphism. In this, more tha
 Note: Python does not support method overloading. We may overload the methods but can only use the latest defined method.
 
 Method Overriding: 
-Method overriding is an example of run time polymorphism. In this, the specific implementation of the method that is already provided by the parent class is provided by the child class. It is used to change the behavior of existing methods and there is a need for at least two classes for method overriding. In method overriding, inheritance always required as it is done between parent class(superclass) and child class(child class) methods.
+Method overriding is an example of run time polymorphism. In this, the specific implementation of the method that is already provided by the parent class is provided by the child class. It is used to change the behavior of existing methods and there is a need for at least two classes for method overriding. In method overriding, inheritance always required as it is done between parent class and child class methods.
 
 ```3. Encapsulation```
 
@@ -73,7 +73,21 @@ Multiple Inheritance: Multiple-level inheritance enables one derived class to in
 
 https://www.geeksforgeeks.org/object-oriented-programming-in-python-set-2-data-hiding-and-object-printing/
 
-It hides unnecessary code details from the user. Also,  when we do not want to give out sensitive parts of our code implementation and this is where data abstraction came.
+It hides unnecessary code details from the user. Also,  when we do not want to give out sensitive parts of our code implementation and this is where data abstraction came.\
+
+Diffrent betweeen Abstaction and Encapsulation:
+
+Abstraction
+
+is the process of hiding the how, and only showing the what\
+the purpose is to simplify information and hide unnecessary details from the user\
+Using only relevant details and hiding unnecessary data at Design Level is called Abstraction. (Like selecting only relevant properties for a class 'Car' to make it more abstract or general.)
+
+Encapsulation
+
+is the process of wrapping data and functionality into a single unit\
+the purpose is to protect data, by preventing direct access and only providing a safer and indirect way\
+Encapsulation is the hiding of data at Implementation Level. Like how to actually hide data from direct/external access. This is done by binding data and methods to a single entity/unit to prevent external access. Thus, encapsulation is also known as data hiding at implementation level.
 
 > 2. API vs REST API vs RESTful API
 
@@ -112,7 +126,8 @@ RESTful API is like following all the grammatical rules perfectly within that di
 
 > 3. what is celery.
 
-https://www.geeksforgeeks.org/celery-integration-with-django/
+https://www.geeksforgeeks.org/celery-integration-with-django/ \
+https://awstip.com/do-background-job-using-django-celery-5aae1b3e8a3a
 
 Celery is an asynchronous task queue or job queue based on distributed message passing. It is used in Python to execute tasks asynchronously. Celery is used to offload long-running tasks from the main request/response cycle within Django. Using Celery becomes critical when your app starts to scale or you need better performance out of Django.
 Celery works by sending messages between Django applications and worker processes through a message broker, such as RabbitMQ or Redis. The message broker is responsible for delivering messages to the worker processes. The worker processes then execute the tasks that are contained in the messages.
