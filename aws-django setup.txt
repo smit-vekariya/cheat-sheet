@@ -6,6 +6,17 @@ You will also have to setup your database as well - I'd recommend using a Postgr
 Here is a tutorial on how to setup a PostgreSQL database with Render for FREE:
 https://www.youtube.com/watch?v=AgTr5mw4zdI
 
+------------------------------------------------------------------------------------------------------------
+
+Ec2 instance upload on ubutu and connect with remote desktop
+find better way to access all file of project in editor insted of access from shell. find in youtube: 
+https://stackoverflow.com/questions/50100360/connecting-to-aws-ec2-instance-through-remote-desktop (you can use SSH find how to use SSH in youtube)
+
+EC2 instace upload on window and connect with remote desktop: 
+https://www.google.com/search?q=how+to+connect+remote+desktop+in+aws+ec2+instance&rlz=1C1ONGR_enIN1084IN1084&oq=how+to+connect+remote+desktop+in+aws+ec2+insrtace&gs_lcrp=EgZjaHJvbWUqCQgBECEYChigATIGCAAQRRg5MgkIARAhGAoYoAEyCQgCECEYChigATIJCAMQIRgKGKAB0gEJMTI0NjJqMGo3qAIIsAIB&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:8087a636,vid:9ypkPfRQg2o,st:74
+
+------------------------------------------------------------------------------------------------------------
+
 How to deploye Django+react app in AWS EC2:
 https://www.youtube.com/watch?v=kd3ONndC_Mw
 
