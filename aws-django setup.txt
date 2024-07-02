@@ -1,3 +1,16 @@
+Please note that you will have to setup your static and media files as well - I'd suggest using Amazon S3.
+Here is a tutorial on how to setup Amazon S3:
+https://www.youtube.com/watch?v=JQVQcNN0cXE
+
+You will also have to setup your database as well - I'd recommend using a PostgreSQL database.
+Here is a tutorial on how to setup a PostgreSQL database with Render for FREE:
+https://www.youtube.com/watch?v=AgTr5mw4zdI
+
+How to deploye Django+react app in AWS EC2:
+https://www.youtube.com/watch?v=kd3ONndC_Mw
+
+------------------------------------------------------------------------------------------------------------
+
 Refrence video for this step:(https://youtu.be/7O1H9kr1CsA?si=9FSVhpeQOMrZaLoT)
 Example of ApiPrime project:(https://github.com/jignesh-kaviraj/ApiPrime.git)
  
@@ -73,12 +86,3 @@ click enter if pink popup is open
 ->If getting 502 BAD GETWAY(nginx) try run project on runserver and find bug
 -> apiprime aws project run on port 80
 		
-Please note that you will have to setup your static and media files as well - I'd suggest using Amazon S3.
-Here is a tutorial on how to setup Amazon S3:
-https://www.youtube.com/watch?v=JQVQcNN0cXE
-
-
-You will also have to setup your database as well - I'd recommend using a PostgreSQL database.
-Here is a tutorial on how to setup a PostgreSQL database with Render for FREE:
-https://www.youtube.com/watch?v=AgTr5mw4zdI
-

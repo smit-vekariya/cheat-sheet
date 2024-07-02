@@ -7,6 +7,8 @@
     2. https://djangocentral.com/django-rest-framework-cheat-sheet/
 > 5. Django interview questions:\
     1. https://codersdaily.in/courses/django-rest-framework-tutorial/introduction-to-django-rest-framework
+> 6. Django celery with redis:\
+    1. https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html
 
 
 # Revision Questions
