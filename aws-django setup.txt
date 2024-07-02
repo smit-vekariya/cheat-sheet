@@ -13,7 +13,7 @@ find better way to access all file of project in editor insted of access from sh
 https://stackoverflow.com/questions/50100360/connecting-to-aws-ec2-instance-through-remote-desktop (you can use SSH find how to use SSH in youtube)
 
 EC2 instace upload on window and connect with remote desktop: 
-https://www.google.com/search?q=how+to+connect+remote+desktop+in+aws+ec2+instance&rlz=1C1ONGR_enIN1084IN1084&oq=how+to+connect+remote+desktop+in+aws+ec2+insrtace&gs_lcrp=EgZjaHJvbWUqCQgBECEYChigATIGCAAQRRg5MgkIARAhGAoYoAEyCQgCECEYChigATIJCAMQIRgKGKAB0gEJMTI0NjJqMGo3qAIIsAIB&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:8087a636,vid:9ypkPfRQg2o,st:74
+https://k21academy.com/amazon-web-services/aws-ec2-instance/#:~:text=Step%201%3A%20Firstly%2C%20we%20have,and%20save%20it%20somewhere%20safe.
 
 ------------------------------------------------------------------------------------------------------------
 
