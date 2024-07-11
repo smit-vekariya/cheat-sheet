@@ -1,4 +1,15 @@
 1. pip install whitenoise
+2. add in middleware below "SessionMiddleware"
+	'whitenoise.middleware.WhiteNoiseMiddleware',
+3. setup for static file:
+	STATIC_URL = '/static/'
+	STATIC_ROOT = BASE_DIR / 'static/'
+	STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+4. run "python manage.py collectstatic" again if needed
+
+---------------------------------------------------------------OR--------------------------------------------------------------------
+
+1. pip install whitenoise
 
 2. Make sure you’re using the static template tag to refer to your static files, 
    rather than writing the URL directly. For example:

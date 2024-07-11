@@ -71,7 +71,7 @@ Actual DOM Updates: React updates only the necessary parts of the Actual DOM bas
 	
 Benefits of Virtual DOM:
 
-Faster Updates: By only updating the necessary parts of the Actual DOM, React avoids unnecessary re-renders, leading to a smoother and more responsive user experience.
+Faster Updates: By only updating the necessary parts of the Actual DOM, React avoids unnecessary re-renders, leading to a smoother and more responsive user experience.\
 Improved Performance: The Virtual DOM diffing is much faster than directly manipulating the Actual DOM, especially for complex UIs.\
 Batching Updates: React can batch multiple Virtual DOM updates together before applying them to the Actual DOM, further enhancing performance.
 

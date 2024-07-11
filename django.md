@@ -8,7 +8,10 @@
 > 5. Django interview questions:\
     1. https://codersdaily.in/courses/django-rest-framework-tutorial/introduction-to-django-rest-framework
 > 6. Django celery with redis:\
-    1. https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html
+    1. https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html\
+    2. https://youtu.be/kmyOgB4h5uk?si=CgEYKs8m5UBwV9rr
+> 7. IDX related:\
+    Youtube Channel: https://www.youtube.com/@EverythingIDX
 
 
 # Revision Questions
@@ -130,6 +133,17 @@ RESTful API is like following all the grammatical rules perfectly within that di
 
 https://www.geeksforgeeks.org/celery-integration-with-django/ \
 https://awstip.com/do-background-job-using-django-celery-5aae1b3e8a3a
+
+ ```
+ => start worker:
+ celery -A backend worker --loglevel=INFO --pool=solo
+
+=> start redis:
+ redis-cli -p 6379
+ 
+=> start beat:
+ celery -A backend beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+ ```
 
 Celery is an asynchronous task queue or job queue based on distributed message passing. It is used in Python to execute tasks asynchronously. Celery is used to offload long-running tasks from the main request/response cycle within Django. Using Celery becomes critical when your app starts to scale or you need better performance out of Django.
 Celery works by sending messages between Django applications and worker processes through a message broker, such as RabbitMQ or Redis. The message broker is responsible for delivering messages to the worker processes. The worker processes then execute the tasks that are contained in the messages.
