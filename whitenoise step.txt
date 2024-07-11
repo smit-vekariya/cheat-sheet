@@ -1,0 +1,49 @@
+1. pip install whitenoise
+
+2. Make sure you’re using the static template tag to refer to your static files, 
+   rather than writing the URL directly. For example:
+  	{% load static %}
+  	<img src="{% static "images/hi.jpg" %}" alt="Hi!">
+
+  	<!-- DON'T WRITE THIS -->
+	<img src="/static/images/hi.jpg" alt="Hi!">
+
+3. add in INSTALLED_APPS in setting.py
+	"whitenoise.runserver_nostatic",
+	"django.contrib.staticfiles",
+
+4. add in MIDDLEWARE in setting.py
+	"django.middleware.security.SecurityMiddleware",
+	"whitenoise.middleware.WhiteNoiseMiddleware",
+
+5. add in setting.py
+	STATIC_ROOT = D:/Production/ec_portal/eC_portal/files/static/ <=== your path that you want to store all static file(store all static file here using point 7)
+	STATIC_URL = /static/
+
+6. add in setting.py 
+	STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+				      OR
+	This combines automatic compression with the caching behaviour provided by Django’s ManifestStaticFilesStorage backend. 
+	If you want to apply compression but don’t want the caching behaviour then you can use the alternative backend:
+
+	STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+7. run this command when you add or change in static
+
+	python manage.py collectstatic
+
+	Using the collectstatic command, Django looks for all static files in your apps and collects them wherever you told it to, i.e. the STATIC_ROOT . 
+	
+8. chage WSGI.py file:
+
+	application = get_wsgi_application()
+
+			TO
+	
+	from whitenoise import WhiteNoise
+	
+	application = get_wsgi_application()
+	application = WhiteNoise(application, root="D:/Production/ec_portal/eC_portal/files/static/")
+
+
+(important : Whenever you change in static file you must run "python manage.py collectstatic")
