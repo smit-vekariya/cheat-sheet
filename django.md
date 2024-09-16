@@ -240,4 +240,89 @@ ASGI (Asynchronous server gateway interface):
 4. `Supported Protocols` : Supports both HTTP and WebSockets, providing a flexible foundation for various communication needs.
 5. `Django Usage` : Since Django 3.0, Django projects can leverage ASGI for improved performance and real-time features. You might encounter an asgi.py file that defines the ASGI application object. However, Django can usually still function with a wsgi.py file for backwards compatibility with WSGI servers.
 
+> 9. CPU-bound task vs I/O-bound task:
 
+1. CPU-bound
+- Definition: Tasks that require significant computation and are limited by CPU processing power.
+- Example: Performing complex data analysis or generating large amounts of statistical reports within a Django view.
+```
+# CPU-bound task example in a Django view
+from django.http import HttpResponse
+import math
+
+def compute_heavy_task(request):
+    # Example of a CPU-bound task
+    result = sum(math.factorial(x) for x in range(1000))
+    return HttpResponse(f"Result: {result}")
+
+```
+2. I/O-bound
+- Definition: Tasks that are limited by input/output operations rather than CPU processing power.
+- Example: Reading or writing files, or making network requests within a Django view.
+```
+# I/O-bound task example in a Django view
+from django.http import HttpResponse
+import requests
+
+def fetch_data_from_api(request):
+    # Example of an I/O-bound task
+    response = requests.get('https://api.example.com/data')
+    data = response.json()
+    return HttpResponse(f"Data: {data}")
+```
+
+> 10. What is GIL and muti-threading and how they work.
+
+1. Global Interpreter Lock (GIL):
+- What is it?: The GIL is a mutex (a type of lock) used in CPython (the standard implementation of Python). It ensures that only one thread can execute Python bytecode at a time.
+- Why is it used?: The GIL simplifies the implementation of memory management and makes sure that Python’s internal data structures are accessed in a thread-safe manner. Without the GIL, managing concurrency in Python's memory management system would be much more complex.
+2. Multi-threading in Python:
+- What is it?: Multi-threading involves running multiple threads concurrently within the same process. Threads can perform tasks simultaneously and share data with each other.
+- How is it implemented?: Python’s threading module provides a way to create and manage threads.
+3. Interaction Between GIL and Multi-threading:
+- CPU-bound tasks: For tasks that require a lot of computation (e.g., heavy mathematical calculations), the GIL can be a limitation. Since only one thread can execute Python bytecode at a time, Python threads don’t get true parallel execution on multiple CPU cores. This means that multi-threading may not speed up CPU-bound tasks in Python.
+- I/O-bound tasks: For tasks that involve waiting for external resources (like network communication or file I/O, calling ecternal api), the GIL is less of a problem. While one thread is waiting for I/O operations to complete, the GIL is released, allowing other threads to run. Thus, Python threads can be effective for handling I/O-bound operations concurrently.
+4. Effect on Multi-threading:
+- With GIL: Multi-threading can be used in Python, but its effectiveness depends on the type of task. For CPU-bound tasks, multi-threading may not improve performance due to the GIL. For I/O-bound tasks, it can still be useful as threads can handle multiple I/O operations concurrently.\
+`Alternatives:`
+    - Multiprocessing: For CPU-bound tasks, the multiprocessing module can be used to create separate processes, each with its own Python interpreter and memory space. This bypasses the GIL, allowing true parallel execution.
+    - Asyncio: For I/O-bound tasks, asynchronous programming with the asyncio module can handle many tasks concurrently without using traditional multi-threading.
+
+`summery`
+- Python does support multi-threading.
+- GIL: In CPython, the GIL limits true parallelism for CPU-bound tasks, as only one thread can execute Python code at a time.
+- Effective Use: Multi-threading is still useful for I/O-bound tasks, where threads can work concurrently on tasks that spend time waiting for external resources.
+- Alternatives: Use multiprocessing for CPU-bound tasks to achieve parallelism or asyncio for concurrent I/O operations.
+
+> 11. annotate() vs aggregate()
+
+1. annotate:
+- It computes values per object in the queryset, meaning that it adds calculated fields to each record in the queryset.
+-  is for per-object calculations and adds the result as a field to each individual object in the queryset.
+- If we want to calculate the sum of total_amount for each order, or an additional calculated field, we can use annotate(). For example, calculating a field total_price_per_order by multiplying total_amount by quantity for each order
+```
+orders = Order.objects.annotate(total_price_per_order=F('total_amount') * F('quantity'))
+
+for order in orders:
+    print(order.total_price_per_order)
+```
+
+2. aggregate:
+- It computes a single value (or multiple values) for the entire queryset and returns a dictionary with the computed values. It is typically used when you need summary values like sum, average, or count for the whole dataset.
+- is for summary calculations across all rows and returns a dictionary.
+```
+# Aggregate example: calculate the total amount for all orders
+result = Order.objects.aggregate(total_sum=Sum('total_amount'))
+print(result)  # {'total_sum': 1234.56}
+```
+
+> 12. What is signals.
+
+- Signals in Django allow you to execute certain code when specific actions or events occur, without modifying the core logic of your app.
+- They are highly useful for actions like sending emails, logging, modifying data before save, or any background task you need to perform when certain events happen.
+- Commonly Used Signals:
+pre_save, post_save, pre_delete, post_delete, request_started, request_finished
+```
+@receiver(post_save, sender=User)
+def send_welcome_email(sender, instance, created, **kwargs):
+```
