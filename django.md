@@ -134,7 +134,7 @@ RESTful API is like following all the grammatical rules perfectly within that di
 https://www.geeksforgeeks.org/celery-integration-with-django/ \
 https://awstip.com/do-background-job-using-django-celery-5aae1b3e8a3a
 
- ```
+ ```python
  => start worker:
  celery -A backend worker --loglevel=INFO --pool=solo
 
@@ -245,7 +245,7 @@ ASGI (Asynchronous server gateway interface):
 1. CPU-bound
 - Definition: Tasks that require significant computation and are limited by CPU processing power.
 - Example: Performing complex data analysis or generating large amounts of statistical reports within a Django view.
-```
+```python
 # CPU-bound task example in a Django view
 from django.http import HttpResponse
 import math
@@ -259,7 +259,7 @@ def compute_heavy_task(request):
 2. I/O-bound
 - Definition: Tasks that are limited by input/output operations rather than CPU processing power.
 - Example: Reading or writing files, or making network requests within a Django view.
-```
+```python
 # I/O-bound task example in a Django view
 from django.http import HttpResponse
 import requests
@@ -300,7 +300,7 @@ def fetch_data_from_api(request):
 - It computes values per object in the queryset, meaning that it adds calculated fields to each record in the queryset.
 -  is for per-object calculations and adds the result as a field to each individual object in the queryset.
 - If we want to calculate the sum of total_amount for each order, or an additional calculated field, we can use annotate(). For example, calculating a field total_price_per_order by multiplying total_amount by quantity for each order
-```
+```python
 orders = Order.objects.annotate(total_price_per_order=F('total_amount') * F('quantity'))
 
 for order in orders:
@@ -310,7 +310,7 @@ for order in orders:
 2. aggregate:
 - It computes a single value (or multiple values) for the entire queryset and returns a dictionary with the computed values. It is typically used when you need summary values like sum, average, or count for the whole dataset.
 - is for summary calculations across all rows and returns a dictionary.
-```
+```python
 # Aggregate example: calculate the total amount for all orders
 result = Order.objects.aggregate(total_sum=Sum('total_amount'))
 print(result)  # {'total_sum': 1234.56}
@@ -322,7 +322,103 @@ print(result)  # {'total_sum': 1234.56}
 - They are highly useful for actions like sending emails, logging, modifying data before save, or any background task you need to perform when certain events happen.
 - Commonly Used Signals:
 pre_save, post_save, pre_delete, post_delete, request_started, request_finished
-```
+```python
 @receiver(post_save, sender=User)
 def send_welcome_email(sender, instance, created, **kwargs):
 ```
+> 13. Nginx, Supervisor, gunicorn
+
+`Nginx`
+- Type: Web server and reverse proxy.
+- Purpose: Serves static files, handles incoming HTTP requests, and forwards them to an application server like Gunicorn.
+- Role: Nginx excels at handling high concurrency, load balancing, SSL termination, caching, and serving static assets (CSS, JavaScript, images) directly to the client. It acts as a reverse proxy, meaning it routes requests to the backend application server (Gunicorn) and then forwards the response back to the client.
+- Concurrency: Designed to handle a large number of connections simultaneously and is very efficient in doing so using event-driven architecture.
+- Usage: Often deployed in front of application servers to offload tasks that aren't directly related to application logic (e.g., serving static files or dealing with slow client connections).
+
+`Gunicorn`
+- Type: Python WSGI application server.
+- Purpose: Handles the execution of Python web applications and passes requests from Nginx (or directly if no reverse proxy is used) to the application (like a Django app).
+- Role: Gunicorn is designed to run Python web applications using the WSGI interface. It handles request processing by distributing incoming requests to a pool of worker processes that serve the app. It doesn't serve static files and is generally only responsible for dynamic content.
+- Concurrency: Uses a pre-fork worker model, where each worker handles one or more requests depending on configuration. Gunicorn is good for managing concurrent requests but doesn't scale as well as Nginx for high volumes of static content or slow clients.
+
+Together:
+- Nginx + Gunicorn: Nginx is often used as a reverse proxy in front of Gunicorn. Nginx handles static files, slow client connections, and forwards dynamic requests to Gunicorn. Gunicorn then processes these requests using your Python app (e.g., Django) and returns the response to Nginx, which then forwards it to the client.
+
+Summary:
+- Nginx: Web server, reverse proxy, handles static files and client connections, suitable for high concurrency.
+- Gunicorn: WSGI application server that runs Python web applications and processes dynamic requests.
+
+`Supervisor`
+- Type: Process control system.
+- Purpose: It ensures that critical processes like Gunicorn (and sometimes Nginx) stay running, automatically restarting them if they crash or fail.
+- Role: Supervisor is primarily used to manage long-running processes like Gunicorn. It starts, stops, and restarts the application server, ensuring high availability and monitoring process health.
+
+- Starts and stops processes: Supervisor ensures your Django application and other background tasks are running continuously during server uptimes. You can easily start, stop, restart, or reload these processes through Supervisor commands.
+- Monitors processes: Supervisor keeps an eye on your processes, detecting crashes or failures. It automatically restarts them based on defined rules, ensuring your application stays online.
+- Error logging and reporting: Supervisor captures logs and error messages from your processes, simplifying troubleshooting and alerting you to potential issues.
+
+Example Flow:
+- Nginx handles incoming HTTP requests and forwards dynamic requests to Gunicorn.Gunicorn processes the requests using your Python application.
+Supervisor ensures Gunicorn is always running, restarts it if it crashes, and provides process monitoring and control capabilities.
+
+Summary:
+- Supervisor ensures the Gunicorn process remains up and running, automatically restarting it in case of failure and allowing for easy process control. It acts as a "guardian" for Gunicorn in the deployment stack.
+
+> 14. What is diffrent between @classmethod, @staticmethos, @abstractmethod in django
+
+In Django (and Python in general), the decorators `@classmethod`, `@staticmethod`, and `@abstractmethod` serve different purposes in defining methods in a class. Here's a breakdown of their differences:
+
+1. `@classmethod`
+- A `@classmethod` defines a method that is bound to the **class**, not the instance of the class.
+- It receives the class (`cls`) as its first argument instead of the instance (`self`).
+- You can call class methods on the class itself or on an instance of the class.
+- **Use Case in Django**: A class method is typically used to create factory methods or alter class-wide properties.
+
+```python
+class MyModel(models.Model):
+    name = models.CharField(max_length=100)
+
+    @classmethod
+    def create_with_default(cls):
+        return cls.objects.create(name="Default Name")
+```
+
+ 2. `@staticmethod`
+- A `@staticmethod` defines a method that neither depends on the instance (`self`) nor the class (`cls`). It behaves just like a normal function, but it belongs to the class' namespace.
+- It doesn’t access or modify class state, making it useful for utility functions.
+- **Use Case in Django**: Static methods are used when the method doesn’t need to access or modify any class or instance data.
+
+```python
+class MyModel(models.Model):
+    name = models.CharField(max_length=100)
+
+    @staticmethod
+    def is_valid_name(name):
+        return len(name) > 0
+```
+
+3. `@abstractmethod`
+- `@abstractmethod` is used in **abstract base classes (ABC)**, which are classes meant to be subclassed. It defines a method that must be implemented in any subclass of the abstract class.
+- You cannot instantiate a class with an abstract method unless you provide implementations for those methods in a subclass.
+- In Django, this is useful when creating custom model classes or other base classes that require subclasses to implement certain methods.
+
+```python
+from abc import ABC, abstractmethod
+
+class BaseModel(ABC):
+    
+    @abstractmethod
+    def save_model(self):
+        """This method must be implemented by subclasses"""
+        pass
+
+class MyModel(BaseModel):
+    
+    def save_model(self):
+        print("Model saved!")
+```
+
+Key Differences:
+- **`@classmethod`**: Method operates on the class itself (uses `cls`).
+- **`@staticmethod`**: Method is independent of class and instance (doesn’t use `self` or `cls`).
+- **`@abstractmethod`**: Declares methods in abstract base classes that must be overridden in subclasses.
