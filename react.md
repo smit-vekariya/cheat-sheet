@@ -152,15 +152,55 @@ Traditional functions use the function keyword and have a more verbose syntax.
 this Binding:\
 Arrow functions do not have their own this context. Instead, they inherit the this value from the enclosing lexical scope (i.e., the context in which they were defined).
 Traditional functions have their own this context, which can vary depending on how the function is called (e.g., as a method, as a standalone function, or with call or apply).
+```javascript
+ const obj = {
+  name: "Arrow Function",
+  arrowFunction: () => {
+    console.log(this.name); // 'this' refers to the surrounding scope (window or undefined in strict mode)
+  }
+};
+
+obj.arrowFunction(); 
+```
 
 arguments Object:\
 Arrow functions do not have their own arguments object. If you need to access arguments, you can use the rest parameter syntax (...args).
 Traditional functions have an arguments object that contains all the arguments passed to the function.
+```javascript
+function regularFunction() {
+  console.log(arguments); // Can access arguments object
+}
+
+regularFunction(1, 2, 3); // Outputs: [1, 2, 3]
+
+//=========================================================================================
+
+const arrowFunction = () => {
+  console.log(arguments); // Doesn't exist, it refers to outer scope if available
+};
+
+arrowFunction(1, 2, 3); // ReferenceError: arguments is not defined
+```
 
 new Operator:\
 Arrow functions cannot be used as constructors. They do not have a prototype property and cannot be called with the new operator.
 Traditional functions can be used as constructors to create new instances of objects using the new operator.
+```javascript
+function RegularFunction(name) {
+  this.name = name;
+}
 
+const instance = new RegularFunction("John");
+console.log(instance.name); // Outputs: "John"
+
+//=========================================================================================
+
+const ArrowFunction = (name) => {
+  this.name = name;
+};
+
+const instance = new ArrowFunction("John"); // Throws an error
+```
 super keyword:\
 Arrow functions do not have their own super binding, which means they cannot be used as methods in classes that use inheritance.
 Traditional functions can use the super keyword to access methods and properties of an object's parent.
