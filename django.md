@@ -15,7 +15,7 @@
 
 
 # Revision Questions
-> 1. OOPs in python:
+# 1. OOPs in python:
 
 https://www.programiz.com/python-programming/object-oriented-programming
 
@@ -90,7 +90,7 @@ is the process of wrapping data and functionality into a single unit\
 the purpose is to protect data, by preventing direct access and only providing a safer and indirect way\
 Encapsulation is the hiding of data at Implementation Level. Like how to actually hide data from direct/external access. This is done by binding data and methods to a single entity/unit to prevent external access. Thus, encapsulation is also known as data hiding at implementation level.
 
-> 2. API vs REST API vs RESTful API
+# 2. API vs REST API vs RESTful API
 
 API (Application Programming Interface)
 
@@ -125,7 +125,7 @@ Think of an API as a language for two programs to talk to each other.\
 REST API is like a specific dialect of that language, with some basic rules.\
 RESTful API is like following all the grammatical rules perfectly within that dialect.
 
-> 3. what is celery.
+# 3. what is celery.
 
 https://www.geeksforgeeks.org/celery-integration-with-django/ \
 https://awstip.com/do-background-job-using-django-celery-5aae1b3e8a3a
@@ -156,7 +156,7 @@ Enhanced reliability:\
 Celery can help to improve the reliability of your Django application by providing fault tolerance. If a worker process fails, Celery will automatically reschedule the task to another worker process.\
 Overall, Celery is a powerful tool that can help you to improve the performance, scalability, and reliability of your Django application.
 
-> 4. what is redis.
+# 4. what is redis.
 
 https://stackabuse.com/working-with-redis-in-python-with-django/
 
@@ -185,7 +185,7 @@ Versatility:\
 Redis can be used for a variety of tasks, including caching, session storage, real-time messaging, and rate limiting.\
 Overall, Redis is a powerful tool that can be used to improve the performance, scalability, and versatility of Django applications.
 
-> 5. what is ElasticSearch  and how to use.
+# 5. what is ElasticSearch  and how to use.
 
 https://medium.com/geekculture/how-to-use-elasticsearch-with-django-ff49fe02b58d#:~:text=Elasticsearch%20is%20a%20search%20engine,Elasticsearch%20is%20developed%20in%20Java.
 
@@ -193,7 +193,7 @@ Elasticsearch is a search engine based on the Lucene library. It provides a dist
 
 Elasticsearch allows you to store, search, and analyze huge volumes of data quickly and in near real-time and give back answers in milliseconds. It’s able to achieve fast search responses because instead of searching the text directly, it searches an index.
 
-> 6. what is docker and how that work with django.
+# 6. what is docker and how that work with django.
 
 https://chatgpt.com/share/ea69a00d-bfe4-49ec-a02d-3d22764fc50b
 
@@ -214,11 +214,11 @@ Isolation: Each container is isolated, meaning dependencies and configurations i
 Scalability: Docker makes it easy to scale your application by adding more containers.\
 Simplified Deployment: With Docker, you can deploy your application as a container on any system that supports Docker.
 
-> 7. What is AsyncIO.
+# 7. What is AsyncIO.
 
 AsyncIO is a Python library that allows you to write asynchronous code. Asynchronous code is code that can run concurrently, meaning that multiple tasks can be executed at the same time. This can be useful for tasks that take a long time to complete, such as database queries or network requests.
 
-> 8. What is asgi.py and wsgi.py in djnago and what is diffrent between them?
+# 8. What is asgi.py and wsgi.py in djnago and what is diffrent between them?
 
 WSGI (web server gateway interface):
 
@@ -236,7 +236,7 @@ ASGI (Asynchronous server gateway interface):
 4. `Supported Protocols` : Supports both HTTP and WebSockets, providing a flexible foundation for various communication needs.
 5. `Django Usage` : Since Django 3.0, Django projects can leverage ASGI for improved performance and real-time features. You might encounter an asgi.py file that defines the ASGI application object. However, Django can usually still function with a wsgi.py file for backwards compatibility with WSGI servers.
 
-> 9. CPU-bound task vs I/O-bound task:
+# 9. CPU-bound task vs I/O-bound task:
 
 1. CPU-bound
 - Definition: Tasks that require significant computation and are limited by CPU processing power.
@@ -267,7 +267,7 @@ def fetch_data_from_api(request):
     return HttpResponse(f"Data: {data}")
 ```
 
-> 10. What is GIL and muti-threading and how they work.
+# 10. What is GIL and muti-threading and how they work.
 
 1. Global Interpreter Lock (GIL):
 - What is it?: The GIL is a mutex (a type of lock) used in CPython (the standard implementation of Python). It ensures that only one thread can execute Python bytecode at a time.
@@ -290,7 +290,7 @@ def fetch_data_from_api(request):
 - Effective Use: Multi-threading is still useful for I/O-bound tasks, where threads can work concurrently on tasks that spend time waiting for external resources.
 - Alternatives: Use multiprocessing for CPU-bound tasks to achieve parallelism or asyncio for concurrent I/O operations.
 
-> 11. annotate() vs aggregate()
+# 11. annotate() vs aggregate()
 
 1. annotate:
 - It computes values per object in the queryset, meaning that it adds calculated fields to each record in the queryset.
@@ -312,7 +312,7 @@ result = Order.objects.aggregate(total_sum=Sum('total_amount'))
 print(result)  # {'total_sum': 1234.56}
 ```
 
-> 12. What is signals.
+# 12. What is signals.
 
 - Signals in Django allow you to execute certain code when specific actions or events occur, without modifying the core logic of your app.
 - They are highly useful for actions like sending emails, logging, modifying data before save, or any background task you need to perform when certain events happen.
@@ -322,7 +322,7 @@ pre_save, post_save, pre_delete, post_delete, request_started, request_finished
 @receiver(post_save, sender=User)
 def send_welcome_email(sender, instance, created, **kwargs):
 ```
-> 13. Nginx, Supervisor, gunicorn
+# 13. Nginx, Supervisor, gunicorn
 
 `Nginx`
 - Type: Web server and reverse proxy.
@@ -360,7 +360,7 @@ Supervisor ensures Gunicorn is always running, restarts it if it crashes, and pr
 Summary:
 - Supervisor ensures the Gunicorn process remains up and running, automatically restarting it in case of failure and allowing for easy process control. It acts as a "guardian" for Gunicorn in the deployment stack.
 
-> 14. What is diffrent between @classmethod, @staticmethos, @abstractmethod in django
+# 14. What is diffrent between @classmethod, @staticmethos, @abstractmethod in django
 
 In Django (and Python in general), the decorators `@classmethod`, `@staticmethod`, and `@abstractmethod` serve different purposes in defining methods in a class. Here's a breakdown of their differences:
 
@@ -419,7 +419,7 @@ Key Differences:
 - **`@staticmethod`**: Method is independent of class and instance (doesn’t use `self` or `cls`).
 - **`@abstractmethod`**: Declares methods in abstract base classes that must be overridden in subclasses.
 
-> 15. what is diffrent between Forms and serializers.
+# 15. what is diffrent between Forms and serializers.
 In Django, both forms and serializers are used for handling data validation and processing, but they serve different purposes and are used in different contexts. Here’s a breakdown of their differences:
 
 **Django Forms**
@@ -472,3 +472,114 @@ class BlogPostSerializer(serializers.ModelSerializer):
    - Serializers: Integrated with DRF’s request and response handling.
 
 In summary, forms are used for traditional web form handling in Django, while serializers are used for handling data in Django Rest Framework APIs.
+
+# 16. where i can use multiprocess and where i can use multithreding
+
+**Multiprocessing** and **multithreading** are two different concurrency approaches, each with specific use cases. The decision to use one over the other depends on the type of task you're trying to optimize and how Python's **Global Interpreter Lock (GIL)** affects performance.
+
+### **Key Differences Between Multiprocessing and Multithreading**
+
+- **Multiprocessing**: Creates separate processes, each with its own memory space and Python interpreter, meaning they avoid the GIL and can run truly in parallel on multiple CPU cores.
+- **Multithreading**: Creates multiple threads within the same process. Threads share the same memory space, but Python’s GIL limits true parallelism for CPU-bound tasks, meaning threads can't execute at the same time for CPU-bound tasks but can be effective for I/O-bound tasks.
+
+### When to Use **Multiprocessing** vs **Multithreading**:
+
+#### 1. **CPU-bound Tasks**:
+   - **Use Multiprocessing**: If your tasks involve heavy computation, like data processing, mathematical operations, or complex algorithms, you should use **multiprocessing**. CPU-bound tasks will benefit from multiple CPU cores since each process can run independently without being affected by the GIL.
+   
+   **Examples:**
+   - Image processing
+   - Video rendering
+   - Data analysis (e.g., large dataset computations)
+   - Machine learning model training
+   - Complex mathematical simulations (e.g., Monte Carlo methods)
+
+   **Why?**: CPU-bound tasks need actual CPU power and true parallelism, which is best achieved by multiprocessing.
+
+#### 2. **I/O-bound Tasks**:
+   - **Use Multithreading**: If your tasks involve waiting on external resources (disk I/O, network I/O, database queries, file reading/writing, API calls, etc.), then **multithreading** can help by allowing the program to switch between threads while waiting for I/O operations to complete.
+
+   **Examples:**
+   - Web scraping (waiting for HTTP responses)
+   - File downloads or uploads
+   - Reading/writing large files from disk
+   - Database queries
+   - Communicating with external APIs
+
+   **Why?**: I/O-bound tasks are mostly waiting for input/output operations to finish, so while one thread is waiting, others can proceed. The GIL is less of an issue because Python releases it when performing I/O-bound operations.
+
+
+### **Django-Specific Use Cases**
+
+#### **When to Use Multiprocessing in Django**:
+   - **Heavy data processing**: For views or background tasks that involve CPU-intensive operations (e.g., generating reports, analyzing large datasets), using multiprocessing will help you utilize all CPU cores.
+   - **Task offloading**: For long-running, computationally expensive tasks, you can use multiprocessing in background workers, such as with Celery or Django’s built-in `multiprocessing`.
+
+#### **When to Use Multithreading in Django**:
+   - **Concurrent I/O operations**: If your views need to make several external API calls or database queries, multithreading will allow you to run these I/O-bound tasks concurrently.
+   - **Real-time applications**: If your Django app needs to handle WebSockets or real-time connections, multithreading (along with an ASGI setup) can improve the handling of concurrent clients.
+
+---
+
+### **Examples for Django**
+
+#### **Example: Multiprocessing in Django for CPU-bound Tasks**
+Imagine a scenario where you need to perform heavy image processing in your Django app. You can use multiprocessing to offload this task:
+
+```python
+import multiprocessing
+from django.http import JsonResponse
+
+def process_image(image_path):
+    # Simulate heavy CPU-bound image processing
+    # This could be resizing, filtering, etc.
+    pass
+
+def image_view(request):
+    image_paths = ['/path/to/image1.jpg', '/path/to/image2.jpg']
+
+    with multiprocessing.Pool(processes=4) as pool:
+        pool.map(process_image, image_paths)
+
+    return JsonResponse({'status': 'Processing complete'})
+```
+
+#### **Example: Multithreading in Django for I/O-bound Tasks**
+Suppose you have a view that makes multiple API calls to gather data:
+
+```python
+import threading
+import requests
+from django.http import JsonResponse
+
+def fetch_data(url):
+    response = requests.get(url)
+    return response.json()
+
+def api_view(request):
+    urls = ['https://api.example.com/data1', 'https://api.example.com/data2']
+    results = []
+
+    # Create threads for each API call
+    threads = []
+    for url in urls:
+        thread = threading.Thread(target=lambda: results.append(fetch_data(url)))
+        thread.start()
+        threads.append(thread)
+
+    # Wait for all threads to complete
+    for thread in threads:
+        thread.join()
+
+    return JsonResponse({'results': results})
+```
+
+In this example, **multithreading** allows the API calls to be made concurrently, reducing the total waiting time.
+
+---
+
+### **Summary**:
+- Use **multiprocessing** for **CPU-bound tasks** where you need to utilize multiple cores for heavy computations.
+- Use **multithreading** for **I/O-bound tasks**, where tasks spend most of their time waiting for external resources (e.g., file I/O, network requests).
+  
+Would you like to explore more about using these techniques in your Django project or need specific examples for your current use case?
