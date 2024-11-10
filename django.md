@@ -92,38 +92,26 @@ Encapsulation is the hiding of data at Implementation Level. Like how to actuall
 
 # 2. API vs REST API vs RESTful API
 
-API (Application Programming Interface)
+> API (Application Programming Interface)
 
-An API is a general term for a way two pieces of software communicate with each other. It acts as a messenger between applications, allowing them to request and receive data.
-APIs can be designed in many ways, using different protocols and formats.
+- An API is a set of rules and protocols that allows different software applications to communicate with each other. It defines the methods and data formats that applications can use to request and exchange information.
+- APIs can be designed in many ways, using different protocols and formats.
 
-REST API (Representational State Transfer API)
+> REST API (Representational State Transfer API)
+- Refers to any API that adheres to REST (REpresentational State Transfer) architectural principles, allowing interactions with web services in a stateless and structured manner.
+- Could have minor inconsistencies, such as mixing up HTTP methods or maintaining some session state.
+- Example: An API that provides information about movies might expose endpoints like /movies, /movies/{id}, and /actors.
+- An API that allows updating a resource but uses GET instead of PUT, or relies on server-side sessions, is still considered a REST API but not RESTful.
+> RESTful API
+-  This term describes an API that correctly follows the REST architectural principles.
+-  Describes an API that is built using REST principles strictly, including the proper use of HTTP methods and resource representation. In simple terms, RESTful is a well-designed REST API.
+- Follows best practices for REST, ensuring consistency and correct use of standards.
+- An API that uses GET only for retrieving resources, POST for creating, PUT for updating, and DELETE for deletion, and ensures that requests are stateless, would be considered RESTful.
+> SOAP api
+- SOAP API, or Simple Object Access Protocol application programming interface, is a standard messaging protocol that allows applications to communicate with each other
+- SOAP uses Extensible Markup Language (XML) to send requests and responses between applications. SOAP messages are structured using XML Schema and other technologies. 
+- SOAP is reliable and trusted, and it's more secure than other options. It's often used in enterprise-level applications where data integrity and reliability are important
 
-REST API is a specific type of API that follows a set of architectural guidelines called REST (Representational State Transfer).\
-REST APIs typically use HTTP verbs (GET, POST, PUT, DELETE) for different actions on data.\
-They also use data formats like JSON or XML to exchange information.\
-REST APIs are popular because they are:\
-Lightweight and flexible\
-Easy to implement\
-Widely supported across different programming languages and frameworks
-
-RESTful API
-
-A RESTful API is an API that strictly adheres to all the principles of REST architecture.\
-This includes characteristics like:\
-Statelessness (each request contains all necessary information)\
-Client-server architecture\
-Uniform interface (consistent way to interact with resources)\
-RESTful APIs are considered more reliable and predictable compared to regular REST APIs, making them ideal for complex, large-scale systems.
-
-In short:\
-All RESTful APIs are REST APIs, but not all REST APIs are strictly RESTful.\
-REST APIs offer flexibility, while RESTful APIs provide more standardization and predictability.
-
-Here's an analogy:\
-Think of an API as a language for two programs to talk to each other.\
-REST API is like a specific dialect of that language, with some basic rules.\
-RESTful API is like following all the grammatical rules perfectly within that dialect.
 
 # 3. what is celery.
 
@@ -583,3 +571,9 @@ In this example, **multithreading** allows the API calls to be made concurrently
 - Use **multithreading** for **I/O-bound tasks**, where tasks spend most of their time waiting for external resources (e.g., file I/O, network requests).
   
 Would you like to explore more about using these techniques in your Django project or need specific examples for your current use case?
+
+# 17. What is Rest Framework ?
+-  Django Rest Framework (DRF) is a powerful and flexible toolkit for building Web APIs using Django. It provides an easy way to create robust RESTful APIs, leveraging Django's features like the ORM (Object-Relational Mapping), authentication, and request handling. DRF is widely used for developing scalable and maintainable API endpoints that are secure and performant.
+- Serializers: Convert complex data like Django models into JSON and handle data validation.
+- Viewsets and Routers: Simplify views and URL configuration to manage API endpoints.
+- Browsable API: Provides an interactive web interface for testing APIs during development.
