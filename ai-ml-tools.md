@@ -15,7 +15,7 @@ Scikit-learn is commonly used by both beginners and experts in the field of mach
 - Model selection (e.g., cross-validation, grid search)
 - Preprocessing (e.g., scaling, encoding)
 
-Awesome! Here's a **classification example** using **Scikit-learn** to predict whether an email is spam or not using the **Naive Bayes classifier**.
+Here's a **classification example** using **Scikit-learn** to predict whether an email is spam or not using the **Naive Bayes classifier**.
 
 This is a simple demo using fake data for illustration. In a real-world scenario, you'd preprocess actual email content (e.g., using `CountVectorizer` or `TfidfVectorizer`).
 
@@ -134,7 +134,7 @@ PyTorch and TensorFlow are both open-source deep learning frameworks widely used
 
 > 1. PyTorch:
 
-PyTorch is an open-source machine learning framework based on the Python programming language. It is primarily used for developing and training neural networks. PyTorch is known for its flexibility, ease of use, and dynamic computational graphs, which allow for efficient model optimization at runtime.
+PyTorch is primarily considered a deep learning framework rather than just a library, though it also functions as a library. While it offers a library of pre-built modules and functionalities, it also provides a higher-level structure and support for building and deploying deep learning models. It is primarily used for developing and training neural networks. PyTorch is known for its flexibility, ease of use, and dynamic computational graphs, which allow for efficient model optimization at runtime.
 
 PyTorch is primarily used for:
 
@@ -154,7 +154,7 @@ In short, PyTorch helps developers and researchers create, train, and deploy dee
 
 > 2. TensorFlow:
 
-TensorFlow is an open-source machine learning and deep learning framework developed by Google. Like PyTorch, it’s widely used for building, training, and deploying machine learning models, especially neural networks.
+TensorFlow is a software library for machine learning and artificial intelligence. It can be used across a range of tasks, but is used mainly for training and inference of neural networks. It is one of the most popular deep learning frameworks, alongside others such as PyTorch.
 
 TensorFlow is an open-source software library, primarily used for numerical computation and large-scale machine learning. Developed by Google, it is a popular choice for building and deploying various machine learning models, particularly deep neural networks. TensorFlow provides tools for data preparation, model construction, training, and deployment across different platforms and hardware. 
 
