@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Full-Stack Interview Prep — Smit</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f11;--bg-s:#17171a;--bg-c:#1c1c20;--bg-h:#242428;
+  --txt:#e8e6e1;--txt-s:#9b9896;--txt-h:#5a5856;
+  --brd:rgba(255,255,255,0.07);--brd-s:rgba(255,255,255,0.14);
+  --acc:#6366f1;--acc-bg:rgba(99,102,241,0.15);--acc-txt:#a5b4fc;
+  --ok:#22c55e;--ok-bg:rgba(34,197,94,0.1);--ok-txt:#86efac;
+  --warn:#f59e0b;--warn-bg:rgba(245,158,11,0.1);--warn-txt:#fcd34d;
+  --danger:#ef4444;--dbg:rgba(239,68,68,0.1);--dtxt:#fca5a5;
+  --teal-bg:rgba(20,184,166,0.12);--teal-txt:#5eead4;
+  --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  --tw:64px;--sw:218px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14px;line-height:1.6;height:100vh;overflow:hidden}
+.shell{display:flex;height:100vh;overflow:hidden}
+
+/* TAB RAIL */
+.tab-rail{width:var(--tw);flex-shrink:0;background:var(--bg-s);border-right:1px solid var(--brd);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:2px;overflow-y:auto}
+.tab-btn{width:50px;height:52px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:transparent;transition:background .15s;position:relative;flex-shrink:0;padding:0}
+.tab-btn:hover{background:var(--bg-h)}.tab-btn.active{background:var(--acc-bg)}.tab-btn.setup-active{background:var(--teal-bg)!important}.tab-btn.setup-active::before{background:var(--teal-txt)!important}.tab-btn.setup-active .tab-lbl{color:var(--teal-txt)!important}
+.tab-btn.active::before{content:'';position:absolute;left:-1px;top:50%;transform:translateY(-50%);width:3px;height:26px;background:var(--acc);border-radius:0 3px 3px 0}
+.tab-icon{width:22px;height:22px;flex-shrink:0}.tab-lbl{font-size:9px;color:var(--txt-h);font-weight:500;letter-spacing:.02em;line-height:1;text-align:center}.tab-btn.active .tab-lbl{color:var(--acc-txt)}.tab-sep{width:30px;height:1px;background:var(--brd);margin:2px 0;flex-shrink:0}
+
+/* SIDEBAR */
+.sidebar{width:var(--sw);flex-shrink:0;background:var(--bg-s);border-right:1px solid var(--brd);display:flex;flex-direction:column;overflow:hidden}
+.sb-head{padding:10px 10px 8px;border-bottom:1px solid var(--brd);flex-shrink:0}
+.sb-grp{font-size:10px;font-weight:600;color:var(--txt-s);letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px}
+.sb-search-wrap{position:relative}
+.sb-si{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--txt-h);pointer-events:none;display:flex}
+.sb-input{width:100%;padding:6px 9px 6px 28px;border-radius:7px;border:1px solid var(--brd);background:var(--bg-c);font-family:var(--font);font-size:12px;color:var(--txt);outline:none}
+.sb-input:focus{border-color:var(--acc);background:var(--bg-h)}
+.sb-list{flex:1;overflow-y:auto;padding:5px}
+.tp-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 8px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-family:var(--font);font-size:12.5px;color:var(--txt-s);text-align:left;transition:background .1s,color .1s;margin-bottom:1px}
+.tp-btn:hover{background:var(--bg-h);color:var(--txt)}.tp-btn.active{background:var(--acc-bg);color:var(--acc-txt);font-weight:500}.tp-btn.setup-tp.active{background:var(--teal-bg)!important;color:var(--teal-txt)!important}.tp-btn.setup-tp.active .tp-qn{background:rgba(20,184,166,0.2)!important;color:var(--teal-txt)!important}
+.tp-ico{width:18px;height:18px;flex-shrink:0;border-radius:4px;overflow:hidden}
+.tp-qn{margin-left:auto;font-size:10px;color:var(--txt-h);background:var(--bg-h);padding:1px 6px;border-radius:7px;flex-shrink:0}.tp-btn.active .tp-qn{background:rgba(99,102,241,0.25);color:var(--acc-txt)}
+
+/* PANEL */
+.panel{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--bg-s);border-bottom:1px solid var(--brd);padding:8px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;min-height:48px;flex-wrap:nowrap}
+.tb-ico{width:20px;height:20px;border-radius:4px;overflow:hidden;flex-shrink:0}
+.tb-info{display:flex;flex-direction:column;min-width:0;flex-shrink:1}
+.tb-title{font-size:13px;font-weight:600;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-desc{font-size:10px;color:var(--txt-s);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.gswrap{position:relative;display:flex;align-items:center}
+.gsicon{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--txt-h);pointer-events:none;display:flex}
+.gsearch{padding:5px 26px 5px 28px;border-radius:7px;border:1px solid var(--brd);background:var(--bg-c);font-family:var(--font);font-size:12px;color:var(--txt);outline:none;width:160px;transition:width .2s,border-color .15s}
+.gsearch:focus{border-color:var(--acc);width:210px;background:var(--bg-h)}
+.gsclear{position:absolute;right:7px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:var(--txt-h);cursor:pointer;display:none;font-size:12px;line-height:1;padding:2px 3px;border-radius:3px}.gsclear.show{display:flex;align-items:center}.gsclear:hover{color:var(--txt)}
+.fgrp{display:flex;gap:3px}
+.fb{padding:4px 8px;border-radius:6px;border:1px solid var(--brd);background:transparent;color:var(--txt-s);cursor:pointer;font-size:11px;font-family:var(--font);transition:all .12s;white-space:nowrap}
+.fb:hover{background:var(--bg-h);color:var(--txt)}
+.fb.on.fa{background:var(--bg-h);color:var(--txt);border-color:var(--brd-s)}
+.fb.on.fc{background:var(--ok-bg);color:var(--ok-txt);border-color:rgba(34,197,94,.3)}
+.fb.on.fm{background:var(--warn-bg);color:var(--warn-txt);border-color:rgba(245,158,11,.3)}
+.fb.on.fs{background:var(--dbg);color:var(--dtxt);border-color:rgba(239,68,68,.3)}
+.tb-stat{font-size:11px;color:var(--txt-h);white-space:nowrap}.tb-stat b{color:var(--txt-s);font-weight:600}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:16px 20px 60px}
+.gsearch-panel{flex:1;overflow-y:auto;padding:16px 20px 60px;display:none}.gsearch-panel.show{display:block}
+.st-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.st-box{background:var(--bg-c);border:1px solid var(--brd);border-radius:8px;padding:9px 12px}
+.st-val{font-size:20px;font-weight:700;color:var(--txt);margin-bottom:1px}.st-lbl{font-size:11px;color:var(--txt-h)}
+.s-hdr{display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--brd)}
+.s-hdr-ico{width:22px;height:22px;border-radius:5px;overflow:hidden;flex-shrink:0}
+.s-hdr-info h2{font-size:15px;font-weight:600;color:var(--txt);margin-bottom:1px}.s-hdr-info p{font-size:11px;color:var(--txt-s)}
+.s-actions{margin-left:auto;display:flex;gap:5px;flex-shrink:0}
+.sa{padding:3px 9px;border-radius:6px;border:1px solid var(--brd);background:transparent;color:var(--txt-s);cursor:pointer;font-size:11px;font-family:var(--font);transition:background .1s}.sa:hover{background:var(--bg-h)}
+
+/* Q CARDS */
+.q-card{background:var(--bg-c);border:1px solid var(--brd);border-radius:9px;margin-bottom:5px;overflow:hidden;transition:border-color .15s}
+.q-card:hover{border-color:var(--brd-s)}.q-card.open{border-color:rgba(99,102,241,.45)}
+.q-trig{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;cursor:pointer;width:100%;background:transparent;border:none;font-family:var(--font);text-align:left}
+.q-trig:hover{background:rgba(255,255,255,.02)}
+.q-left{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;margin-top:1px}
+.q-num{width:22px;height:22px;border-radius:50%;background:var(--bg-h);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--txt-h)}
+.badge{font-size:9px;padding:2px 5px;border-radius:5px;white-space:nowrap;font-weight:600;letter-spacing:.02em}
+.bc{background:var(--ok-bg);color:var(--ok-txt)}.bm{background:var(--warn-bg);color:var(--warn-txt)}.bs{background:var(--dbg);color:var(--dtxt)}.binfo{background:var(--teal-bg);color:var(--teal-txt)}
+.q-text{flex:1;font-size:13px;font-weight:500;color:var(--txt);line-height:1.5}
+.q-chev{flex-shrink:0;width:14px;height:14px;margin-top:3px;color:var(--txt-h);transition:transform .2s}.q-card.open .q-chev{transform:rotate(180deg)}
+.q-ans{display:none;padding:9px 13px 13px 44px;border-top:1px solid var(--brd)}.q-card.open .q-ans{display:block}
+.q-ans p{font-size:12.5px;color:var(--txt-s);line-height:1.75;margin-bottom:6px}.q-ans p:last-child{margin-bottom:0}
+.q-ans strong{font-weight:600;color:var(--txt)}
+.q-ans code{font-family:var(--mono);font-size:11px;background:var(--bg-h);padding:1px 5px;border-radius:4px;color:#a5b4fc;border:1px solid var(--brd)}
+.q-ans pre{font-family:var(--mono);font-size:11.5px;background:var(--bg);padding:11px 13px;border-radius:8px;overflow-x:auto;line-height:1.65;color:#e2e8f0;margin:.45rem 0;border:1px solid var(--brd)}
+.q-ans ul,.q-ans ol{font-size:12.5px;color:var(--txt-s);line-height:1.75;padding-left:1.2rem;margin-bottom:6px}.q-ans li{margin-bottom:2px}
+.q-ans table{width:100%;border-collapse:collapse;font-size:11.5px;margin:.45rem 0}
+.q-ans th{background:var(--bg-h);color:var(--txt-s);font-weight:600;padding:5px 9px;text-align:left;border:1px solid var(--brd)}
+.q-ans td{padding:5px 9px;border:1px solid var(--brd);color:var(--txt-s);vertical-align:top}
+
+/* STEP CARDS */
+.step-card{background:var(--bg-c);border:1px solid var(--brd);border-radius:9px;margin-bottom:5px;overflow:hidden;transition:border-color .15s}
+.step-card:hover{border-color:var(--brd-s)}.step-card.open{border-color:rgba(20,184,166,.4)}
+.step-trig{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;cursor:pointer;width:100%;background:transparent;border:none;font-family:var(--font);text-align:left}
+.step-trig:hover{background:rgba(255,255,255,.02)}
+.step-num{width:22px;height:22px;border-radius:6px;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal-txt);flex-shrink:0;margin-top:1px}
+.step-text{flex:1;font-size:13px;font-weight:500;color:var(--txt);line-height:1.5}
+.step-chev{flex-shrink:0;width:14px;height:14px;margin-top:3px;color:var(--txt-h);transition:transform .2s}.step-card.open .step-chev{transform:rotate(180deg)}
+.step-ans{display:none;padding:9px 13px 13px 44px;border-top:1px solid var(--brd)}.step-card.open .step-ans{display:block}
+.step-ans p{font-size:12.5px;color:var(--txt-s);line-height:1.75;margin-bottom:6px}
+.step-ans pre{font-family:var(--mono);font-size:11.5px;background:var(--bg);padding:11px 13px;border-radius:8px;overflow-x:auto;line-height:1.65;color:#e2e8f0;margin:.45rem 0;border:1px solid var(--brd)}
+.step-ans code{font-family:var(--mono);font-size:11px;background:var(--bg-h);padding:1px 5px;border-radius:4px;color:var(--teal-txt);border:1px solid var(--brd)}
+
+/* GLOBAL SEARCH */
+.gs-result{background:var(--bg-c);border:1px solid var(--brd);border-radius:9px;margin-bottom:6px;overflow:hidden}
+.gs-r-hdr{padding:8px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--brd);background:var(--bg-h)}
+.gs-r-hdr span{font-size:11px;font-weight:600;color:var(--txt-h)}
+.gs-r-hdr .gs-topic{font-size:11px;color:var(--acc-txt);font-weight:500}
+.gs-r-body{padding:10px 12px}
+.gs-r-q{font-size:13px;font-weight:500;color:var(--txt);margin-bottom:6px;cursor:pointer;line-height:1.4}
+.gs-r-q:hover{color:var(--acc-txt)}
+.gs-r-ans{font-size:12px;color:var(--txt-s);line-height:1.6}
+.gs-r-ans p{margin-bottom:4px;font-size:12px;color:var(--txt-s)}
+.gs-r-ans code{font-family:var(--mono);font-size:10.5px;background:var(--bg-h);padding:1px 4px;border-radius:3px;color:#a5b4fc}
+.gs-r-ans pre{font-family:var(--mono);font-size:10.5px;background:var(--bg);padding:8px;border-radius:6px;overflow-x:auto;color:#e2e8f0;margin:.3rem 0;border:1px solid var(--brd)}
+.gs-empty{padding:40px;text-align:center;color:var(--txt-h);font-size:14px}
+.gs-count{font-size:12px;color:var(--txt-h);margin-bottom:12px}
+mark{background:rgba(99,102,241,0.35);color:var(--acc-txt);border-radius:2px;padding:0 2px}
+
+/* EMPTY STATE */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:70vh;color:var(--txt-h);gap:12px;text-align:center}
+
+@media(max-width:680px){.tab-rail{display:none}.sidebar{width:160px}.content{padding:10px 10px 40px}.st-row{display:none}.tb-desc{display:none}}
+
+/* SETUP SECTIONS — full content, no accordion */
+.setup-section-card{
+  background:var(--bg-c);border:1px solid var(--brd);border-radius:10px;
+  margin-bottom:14px;overflow:hidden
+}
+.setup-sec-hdr{
+  padding:12px 16px 10px;
+  border-bottom:1px solid var(--brd);
+  background:linear-gradient(90deg,rgba(20,184,166,.08),transparent)
+}
+.setup-sec-title{
+  font-size:14px;font-weight:600;color:var(--txt);margin-bottom:3px
+}
+.setup-sec-sub{
+  font-size:11.5px;color:var(--txt-s)
+}
+.setup-sec-body{
+  padding:14px 16px
+}
+.setup-sec-body p{
+  font-size:12.5px;color:var(--txt-s);line-height:1.75;margin-bottom:8px
+}
+.setup-sec-body a{
+  color:var(--acc-txt);text-decoration:none
+}
+.setup-sec-body a:hover{text-decoration:underline}
+.setup-sec-body pre{
+  font-family:var(--mono);font-size:11.5px;background:var(--bg);
+  padding:14px 16px;border-radius:8px;overflow-x:auto;
+  line-height:1.7;color:#e2e8f0;border:1px solid var(--brd);
+  white-space:pre;margin-top:8px
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<div class="tab-rail" id="tab-rail"></div>
+<div class="sidebar">
+  <div class="sb-head">
+    <div class="sb-grp" id="sb-grp">Topics</div>
+    <div class="sb-search-wrap">
+      <span class="sb-si"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 4 4"/></svg></span>
+      <input class="sb-input" id="sb-input" placeholder="Filter topics…" oninput="renderSidebar()"/>
+    </div>
+  </div>
+  <div class="sb-list" id="sb-list"></div>
+</div>
+<div class="panel">
+  <div class="topbar">
+    <div class="tb-ico" id="tb-ico"></div>
+    <div class="tb-info"><div class="tb-title" id="tb-title">Select a topic</div><div class="tb-desc" id="tb-desc"></div></div>
+    <div class="tb-right">
+      <div class="gswrap">
+        <span class="gsicon"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 4 4"/></svg></span>
+        <input class="gsearch" id="gsearch" placeholder="Global search… (Ctrl+K)" oninput="globalSearch(this.value)" onkeydown="if(event.key==='Escape')clearGS()"/>
+        <button class="gsclear" id="gsclear" onclick="clearGS()">✕</button>
+      </div>
+      <div class="fgrp">
+        <button class="fb fa on" onclick="setFilter('all')">All</button>
+        <button class="fb fc" onclick="setFilter('core')">Core</button>
+        <button class="fb fm" onclick="setFilter('mid')">Mid</button>
+        <button class="fb fs" onclick="setFilter('senior')">Senior</button>
+      </div>
+      <span class="tb-stat"><b id="s-open">0</b> open</span>
+      <span class="tb-stat"><b id="s-vis">0</b> shown</span>
+    </div>
+  </div>
+  <div class="content" id="content">
+    <div class="empty-state">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".3"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <p>Select a group from the left rail, then choose a topic</p>
+    </div>
+  </div>
+  <div class="gsearch-panel" id="gsearch-panel"></div>
+</div>
+</div>
+<script>
+/* LOGOS */
+const L={
+python:`<svg viewBox="0 0 32 32"><defs><linearGradient id="pa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#387EB8"/><stop offset="1" stop-color="#366994"/></linearGradient><linearGradient id="pb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE052"/><stop offset="1" stop-color="#FFC331"/></linearGradient></defs><path d="M15.9 2C11.2 2 11.5 4 11.5 4v4.1h4.6v1.3H8.4S6 9.1 6 13.9s2.1 4.7 2.1 4.7h2.5v-4.8s-.1-2.1 2.1-2.1h5.6s2-.1 2-2V5.9S20.6 2 15.9 2zm-3 1.8c.6 0 1.1.5 1.1 1.1s-.5 1.1-1.1 1.1-1.1-.5-1.1-1.1.5-1.1 1.1-1.1z" fill="url(#pa)"/><path d="M16.1 30c4.7 0 4.4-2 4.4-2v-4.1h-4.6v-1.3h7.7s2.4.3 2.4-4.5-2.1-4.7-2.1-4.7H21.4v4.8s.1 2.1-2.1 2.1h-5.6s-2 .1-2 2v4.9S11.4 30 16.1 30zm3-1.8c-.6 0-1.1-.5-1.1-1.1s.5-1.1 1.1-1.1 1.1.5 1.1 1.1-.5 1.1-1.1 1.1z" fill="url(#pb)"/></svg>`,
+django:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#092E20" rx="5"/><text x="4" y="24" font-family="Georgia,serif" font-size="19" font-weight="bold" fill="#44B78B">dj</text></svg>`,
+drf:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#8B0000" rx="5"/><text x="3" y="22" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#fff">DRF</text></svg>`,
+postgres:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1a3a5c" rx="5"/><ellipse cx="16" cy="12" rx="8" ry="4" fill="#336791"/><rect x="8" y="12" width="16" height="8" fill="#336791"/><ellipse cx="16" cy="20" rx="8" ry="4" fill="#4a90c4"/><path d="M22 8c2 1 3 4 3 7s-1 6-3 7" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`,
+sql:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#e8820c" rx="5"/><text x="4" y="22" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#fff">SQL</text></svg>`,
+aws:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#232f3e" rx="5"/><path d="M6 19l2.5-7L11 19l2.5-7L16 19l2.5-7L21 19" stroke="#FF9900" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 22.5h21" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+langchain:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1C3C3C" rx="5"/><circle cx="16" cy="16" r="8" stroke="#1DB954" stroke-width="2" fill="none"/><path d="M11 16h10M16 11v10" stroke="#84d4d4" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="16" r="2" fill="#1DB954"/></svg>`,
+langgraph:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1a1a2e" rx="5"/><circle cx="8" cy="16" r="3" fill="#6366f1"/><circle cx="24" cy="8" r="3" fill="#6366f1"/><circle cx="24" cy="24" r="3" fill="#6366f1"/><path d="M11 16l10-6M11 16l10 6" stroke="#a5b4fc" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+langsmith:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1a1a2e" rx="5"/><path d="M6 24L10 9l4.5 10 4-6L24 24" stroke="#f59e0b" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+autogen:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#0a0a23" rx="5"/><circle cx="16" cy="13" r="5" stroke="#00d4ff" stroke-width="1.8" fill="none"/><circle cx="16" cy="13" r="2" fill="#00d4ff"/><path d="M7 25c0-5 4-8 9-8s9 3 9 8" stroke="#00d4ff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+react:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#20232a" rx="5"/><circle cx="16" cy="16" r="2.5" fill="#61DAFB"/><ellipse cx="16" cy="16" rx="11.5" ry="4.5" stroke="#61DAFB" stroke-width="1.5" fill="none"/><ellipse cx="16" cy="16" rx="11.5" ry="4.5" stroke="#61DAFB" stroke-width="1.5" fill="none" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="11.5" ry="4.5" stroke="#61DAFB" stroke-width="1.5" fill="none" transform="rotate(120 16 16)"/></svg>`,
+javascript:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F7DF1E" rx="5"/><path d="M9.6 24.3c.5.9 1.2 1.5 2.4 1.5 1 0 1.7-.5 1.7-1.3 0-.9-.7-1.2-1.8-1.7l-.6-.3c-1.8-.8-3-1.7-3-3.7 0-1.8 1.4-3.2 3.5-3.2 1.5 0 2.6.5 3.4 1.9l-1.8 1.2c-.4-.7-.8-1-1.5-1-.7 0-1.2.4-1.2 1 0 .7.5 1 1.5 1.5l.6.3c2.1.9 3.3 1.8 3.3 3.9 0 2.2-1.7 3.4-4 3.4-2.2 0-3.7-1.1-4.4-2.5zm9.4.2c.4.7.8 1.3 1.7 1.3.8 0 1.4-.3 1.4-1.6v-8.3h2.3V24c0 2.7-1.6 3.9-3.9 3.9-2.1 0-3.3-1.1-3.9-2.4z" fill="#333"/></svg>`,
+docker:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#0db7ed" rx="5"/><rect x="5.5" y="12" width="4" height="3.5" rx=".5" fill="#fff"/><rect x="10.5" y="12" width="4" height="3.5" rx=".5" fill="#fff"/><rect x="15.5" y="12" width="4" height="3.5" rx=".5" fill="#fff"/><rect x="10.5" y="7.5" width="4" height="3.5" rx=".5" fill="#fff"/><rect x="15.5" y="7.5" width="4" height="3.5" rx=".5" fill="#fff"/><path d="M27.5 15.5c-.5-1-1.8-1.3-2.6-1.3-.2-1.6-1.4-2.3-2.1-2.5l-.4-.1-.1.4c-.3.9-.3 1.8 0 2.4.2.4.5.8.9 1H5c-.1 1 .1 2.4.7 3.4.7 1.1 1.8 1.6 3.3 1.6 3.1 0 5.4-1.5 6.8-4.2 1.3.1 2.5-.2 3.3-1.2l.2-.3z" fill="#fff"/></svg>`,
+github:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#24292e" rx="5"/><path d="M16 4C9.4 4 4 9.4 4 16c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6C24.6 25.8 28 21.3 28 16c0-6.6-5.4-12-12-12z" fill="#fff"/></svg>`,
+genai:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#7c3aed" rx="5"/><path d="M16 5l1.8 5.5H23l-4.5 3.3 1.7 5.5L16 16l-4.2 3.3 1.7-5.5L9 10.5h5.2z" fill="#fff"/><circle cx="7" cy="7" r="1.5" fill="#c4b5fd"/><circle cx="25" cy="25" r="1.5" fill="#c4b5fd"/></svg>`,
+nginx:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#009639" rx="5"/><text x="4" y="22" font-family="Arial,sans-serif" font-size="9.5" font-weight="bold" fill="#fff">nginx</text></svg>`,
+setup:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1e293b" rx="5"/><path d="M8 10h16M8 16h12M8 22h8" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="4" fill="none" stroke="#f59e0b" stroke-width="1.8"/><path d="M24 20v2l1.2 1.2" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+pythonanywhere:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#2b5b84" rx="5"/><text x="3" y="14" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="#fff">Python</text><text x="3" y="24" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="#38bdf8">Anywhere</text></svg>`,
+whitenoise:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#374151" rx="5"/><circle cx="16" cy="12" r="5" fill="none" stroke="#fff" stroke-width="1.8"/><path d="M9 24c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+deploy:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#0f4c75" rx="5"/><path d="M16 6l8 5v10l-8 5-8-5V11z" stroke="#63b3ed" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M16 6v16M8 11l8 5 8-5" stroke="#63b3ed" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+cbv:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#092E20" rx="5"/><rect x="7" y="8" width="8" height="6" rx="2" fill="#44B78B"/><rect x="17" y="8" width="8" height="6" rx="2" fill="#2d7a5f"/><rect x="7" y="18" width="8" height="6" rx="2" fill="#2d7a5f"/><rect x="17" y="18" width="8" height="6" rx="2" fill="#44B78B"/><path d="M11 14v4M21 14v4M15 11h2" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+deploy:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#0f4c75" rx="5"/><path d="M16 6l8 5v10l-8 5-8-5V11z" stroke="#63b3ed" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M16 6v16M8 11l8 5 8-5" stroke="#63b3ed" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+deploy:`<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#0f4c75" rx="5"/><path d="M16 6l8 5v10l-8 5-8-5V11z" stroke="#63b3ed" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M16 6v16M8 11l8 5 8-5" stroke="#63b3ed" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+};
+/* ===== DATA ===== */
+const GROUPS=[
+{id:'python',label:'Python',lk:'python',topics:[
+{id:'core-python',label:'Core Python',lk:'python',desc:'Data types, OOP, GIL, decorators, generators, async',questions:[
+{q:'What are the main data types in Python?',l:'core',a:`<p><code>list</code> — ordered, mutable, duplicates allowed: <code>[1,'a',3.0]</code></p><p><code>tuple</code> — ordered, immutable, duplicates allowed: <code>(1,'a')</code></p><p><code>set</code> — unordered, no duplicates: <code>{1,2,3}</code></p><p><code>dict</code> — ordered (3.7+), key-value: <code>{'a':1}</code></p><p>Primitives: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>, <code>bytes</code>.</p>`},
+{q:'Difference between list and tuple? Why is tuple faster?',l:'core',a:`<p><strong>Mutability:</strong> lists are mutable (add/remove/change). Tuples are immutable — fixed once created.</p><p><strong>Why tuple is faster:</strong> Python stores tuples compactly in memory. CPython caches small tuples. Fixed size = less allocation overhead.</p><pre>import sys
+sys.getsizeof([1,2,3])   # 88 bytes
+sys.getsizeof((1,2,3))   # 64 bytes</pre><p>Use tuples for fixed data (DB rows, coordinates), lists for dynamic collections.</p>`},
+{q:'Difference between list and array?',l:'core',a:`<p><strong>List</strong> — built-in, accepts mixed types, flexible. General purpose.</p><p><strong>array (import array)</strong> — single type only (e.g. only ints). More memory-efficient for large numeric data. Faster for homogeneous numeric operations.</p><pre>from array import array
+my_array = array('i', [1,2,3])   # 'i' = signed int
+
+my_list  = [1, "hello", 3.14]    # mixed types OK</pre>`},
+{q:'What is a constructor (__init__) and what is self?',l:'core',a:`<p><code>__init__</code> is a special method automatically called when an object is created. Used to initialize attributes.</p><p><code>self</code> refers to the current instance of the class — it lets instance methods access and modify the object's data.</p><pre>class Person:
+    def __init__(self, name, age):
+        self.name = name   # self binds attribute to THIS instance
+        self.age  = age
+
+p = Person("Smit", 25)
+print(p.name)   # "Smit"</pre>`},
+{q:'What are all 5 OOP concepts in Python?',l:'core',a:`<p><strong>1. Class & Object:</strong> Class = blueprint; object = instance with own state.</p><p><strong>2. Encapsulation:</strong> Bundle data + methods. Use <code>__private</code> to restrict access.</p><p><strong>3. Inheritance:</strong> Child inherits from parent. Use <code>super()</code>. Types: single, multi-level, hierarchical, multiple.</p><p><strong>4. Polymorphism:</strong> Same interface, different behaviour. Method overriding — child redefines parent method.</p><p><strong>5. Abstraction:</strong> Hide implementation via <code>ABC</code> + <code>@abstractmethod</code>.</p><pre>from abc import ABC, abstractmethod
+class Shape(ABC):
+    @abstractmethod
+    def area(self): pass
+
+class Circle(Shape):
+    def __init__(self, r): self.r = r
+    def area(self): return 3.14 * self.r ** 2</pre>`},
+{q:'What is an interface in Python?',l:'mid',a:`<p>Python has no <code>interface</code> keyword. Interfaces are implemented via Abstract Base Classes (ABC) — defines a contract that all subclasses must implement.</p><pre>from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self): pass
+
+    @abstractmethod
+    def perimeter(self): pass
+
+class Circle(Shape):
+    def __init__(self, r): self.r = r
+    def area(self):      return 3.14 * self.r**2
+    def perimeter(self): return 2 * 3.14 * self.r</pre><p>Benefits: enforces contract, enables polymorphism, promotes decoupling.</p>`},
+{q:'Difference between @classmethod, @staticmethod, @abstractmethod?',l:'mid',a:`<p><code>@classmethod</code> — receives <code>cls</code>. Factory methods, class-wide state.</p><pre>class User:
+    @classmethod
+    def from_dict(cls, d): return cls(d['name'], d['email'])</pre><p><code>@staticmethod</code> — no <code>self</code>/<code>cls</code>. Utility function in class namespace.</p><pre>class Validator:
+    @staticmethod
+    def is_email(v): return '@' in v and '.' in v</pre><p><code>@abstractmethod</code> — marks method in ABC that subclasses must implement. Instantiating ABC raises <code>TypeError</code>.</p>`},
+{q:'What are Python decorators? Write one from scratch.',l:'core',a:`<p>A decorator wraps a function to extend behaviour. <code>@deco</code> is sugar for <code>fn = deco(fn)</code>. Always use <code>@functools.wraps</code>.</p><pre>import functools, time
+
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        t = time.perf_counter()
+        result = func(*args, **kwargs)
+        print(f"{func.__name__}: {(time.perf_counter()-t)*1000:.1f}ms")
+        return result
+    return wrapper
+
+@timer
+def heavy(): time.sleep(0.5)
+
+# Decorator with arguments:
+def retry(n=3):
+    def deco(func):
+        @functools.wraps(func)
+        def wrapper(*a, **kw):
+            for i in range(n):
+                try: return func(*a, **kw)
+                except:
+                    if i == n-1: raise
+        return wrapper
+    return deco</pre>`},
+{q:'What is the GIL? Threading vs multiprocessing?',l:'mid',a:`<p>GIL (Global Interpreter Lock) allows only one thread to execute Python bytecode at a time in CPython. Protects reference-counting memory management.</p><p><strong>CPU-bound:</strong> GIL prevents parallelism → use <code>multiprocessing</code>.</p><p><strong>I/O-bound:</strong> GIL released while waiting for I/O → threading works.</p><pre># I/O-bound — threading
+from concurrent.futures import ThreadPoolExecutor
+with ThreadPoolExecutor(max_workers=10) as ex:
+    results = list(ex.map(fetch_url, urls))
+
+# CPU-bound — multiprocessing
+from concurrent.futures import ProcessPoolExecutor
+with ProcessPoolExecutor() as ex:
+    results = list(ex.map(crunch, chunks))</pre>`},
+{q:'What are generators? Why memory-efficient?',l:'core',a:`<pre>def read_lines(path):
+    with open(path) as f:
+        for line in f:
+            yield line.strip()   # one line at a time
+
+# Process millions of rows with constant memory
+total = sum(float(r.split(',')[3])
+            for r in read_lines('sales.csv')
+            if r.split(',')[2] == 'paid')</pre><p>Generators are lazy — yield one item at a time instead of loading everything into RAM.</p>`},
+{q:'What is asyncio and when to use over threads?',l:'mid',a:`<pre>import asyncio, aiohttp
+
+async def fetch(session, url):
+    async with session.get(url) as r:
+        return await r.json()
+
+async def fetch_all(urls):
+    async with aiohttp.ClientSession() as s:
+        return await asyncio.gather(*[fetch(s, u) for u in urls])
+
+asyncio.run(fetch_all(my_urls))</pre><p>Use asyncio for many concurrent I/O ops. Single-threaded event loop — no race conditions. Not for CPU-bound work.</p>`},
+{q:'What is a lambda function?',l:'core',a:`<pre>add   = lambda x, y: x + y
+evens = list(filter(lambda x: x%2==0, range(10)))
+users_sorted = sorted(users, key=lambda u: u['age'])
+
+# map + filter pipeline
+prices = list(map(lambda p: p*1.18, filter(lambda p: p>0, raw)))</pre><p>Anonymous single-expression function. Use for short throwaway callbacks. Don't use for complex logic.</p>`},
+{q:'deepcopy vs shallow copy?',l:'core',a:`<pre>import copy
+orig    = {"user": {"scores": [10, 20]}}
+shallow = orig.copy()           # new outer dict, shared inner
+deep    = copy.deepcopy(orig)   # fully independent
+
+orig["user"]["scores"].append(30)
+print(shallow["user"]["scores"])  # [10, 20, 30] — shared!
+print(deep["user"]["scores"])     # [10, 20] — independent</pre>`},
+{q:'What is WSGI vs ASGI in Django?',l:'mid',a:`<p><strong>WSGI</strong> — synchronous, one request per thread. Traditional Django. Works with Gunicorn, uWSGI.</p><p><strong>ASGI</strong> — asynchronous, supports WebSockets + concurrent requests. Django 3.0+. Works with Uvicorn, Daphne.</p><pre>application = get_wsgi_application()   # wsgi.py
+application = get_asgi_application()   # asgi.py (async)</pre><p>Use ASGI for WebSockets, real-time features, or async views.</p>`},
+{q:'What is synchronous vs asynchronous in Django?',l:'mid',a:`<p><strong>Synchronous</strong> — tasks execute one after another. Thread blocks while waiting for I/O. Simple but inefficient under load.</p><p><strong>Asynchronous</strong> — non-blocking. Thread continues while I/O completes in background. More efficient for I/O-bound tasks.</p><pre>import time, asyncio
+from django.http import JsonResponse
+
+# Synchronous — blocks thread for 5s
+def sync_view(request):
+    time.sleep(5)
+    return JsonResponse({'msg': 'sync done'})
+
+# Asynchronous — thread free during sleep
+async def async_view(request):
+    await asyncio.sleep(5)
+    return JsonResponse({'msg': 'async done'})</pre>`},
+{q:'What is a context manager? Implement __enter__ and __exit__.',l:'mid',a:`<pre>class DBTransaction:
+    def __enter__(self):
+        self.conn = connect_db()
+        return self.conn
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type: self.conn.rollback()
+        else:        self.conn.commit()
+        self.conn.close()
+        return False   # don't suppress exceptions
+
+with DBTransaction() as conn:
+    conn.execute("UPDATE accounts SET balance=balance-100")
+
+# Generator-based (simpler):
+from contextlib import contextmanager
+@contextmanager
+def timer():
+    import time; t = time.perf_counter()
+    yield
+    print(f"Elapsed: {time.perf_counter()-t:.3f}s")</pre>`},
+{q:'What are __slots__ and when to use them?',l:'senior',a:`<pre>class Vector:
+    __slots__ = ('x', 'y', 'z')   # no __dict__, fixed attributes
+
+    def __init__(self, x, y, z):
+        self.x, self.y, self.z = x, y, z
+
+# Memory: ~232 bytes without slots → ~72 bytes with slots
+# Creating 1 million instances: ~232MB vs ~72MB</pre><p>Use when creating millions of instances of the same class. Trade-off: no arbitrary attributes, complicates multiple inheritance.</p>`},
+]},
+]},
+{id:'django-g',label:'Django',lk:'django',topics:[
+{id:'django',label:'Django Core',lk:'django',desc:'Lifecycle, ORM, signals, middleware, CBV, Celery, Redis',questions:[
+{q:"Django request/response lifecycle?",l:'core',a:`<ol><li>Browser request → WSGI/ASGI handler.</li><li>Request through <code>MIDDLEWARE</code> list top-down (process_request).</li><li>URL resolver matches view from <code>urlpatterns</code>.</li><li>View executes → returns <code>HttpResponse</code>.</li><li>Response through middleware bottom-up (process_response).</li><li>Response delivered to client.</li></ol><p><code>SecurityMiddleware</code> must be first in <code>MIDDLEWARE</code> list.</p>`},
+{q:'What is API vs REST API vs RESTful API?',l:'core',a:`<p><strong>API</strong> — any interface between software systems. Can use any protocol.</p><p><strong>REST API</strong> — follows REST (Representational State Transfer) principles: stateless, HTTP methods, resource-based URLs. May have minor inconsistencies.</p><p><strong>RESTful API</strong> — strictly follows REST: proper HTTP methods (GET/POST/PUT/DELETE), stateless requests, consistent resource naming.</p><p><strong>SOAP API</strong> — uses XML messaging protocol. More strict, better for enterprise. More secure but heavier than REST.</p>`},
+{q:'select_related vs prefetch_related?',l:'core',a:`<p><code>select_related</code> — SQL JOIN, fetches in same query. ForeignKey, OneToOne.</p><p><code>prefetch_related</code> — separate queries, joined in Python. ManyToMany, reverse FK.</p><pre>Post.objects.select_related('author')       # 1 JOIN query
+Post.objects.prefetch_related('comments')   # 2 queries, Python merge
+# Combine:
+Post.objects.select_related('author').prefetch_related('tags')</pre><p>Wrong choice = N+1 problem. Use <code>django-debug-toolbar</code> to count queries.</p>`},
+{q:'Django signals — when to use and when NOT?',l:'mid',a:`<pre>from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+# Common signals: pre_save, post_save, pre_delete, post_delete,
+# request_started, request_finished, m2m_changed</pre><p><strong>Use:</strong> separate app needs to react (true decoupling).</p><p><strong>Avoid:</strong> need transaction safety, logic belongs in same app, traceability important.</p>`},
+{q:'What is select_for_update()?',l:'senior',a:`<pre>from django.db import transaction
+
+with transaction.atomic():
+    account = Account.objects.select_for_update().get(pk=1)
+    account.balance -= amount
+    account.save()
+    # Row locked until atomic block exits</pre><p>Issues <code>SELECT ... FOR UPDATE</code> — prevents race conditions. Essential for wallets, inventory, seat booking. Without it two concurrent reads both deduct from same balance.</p>`},
+{q:'Q objects and F expressions?',l:'mid',a:`<p><code>Q</code> — OR logic and negation (chained <code>.filter()</code> always ANDs).</p><pre>from django.db.models import Q, F
+
+Post.objects.filter(Q(status='published') | Q(pinned=True))
+Post.objects.filter(~Q(status='draft'))</pre><p><code>F</code> — atomic DB-level field reference, no Python round-trip.</p><pre>Product.objects.filter(pk=1).update(stock=F('stock')-1)
+Order.objects.filter(delivered_at__gt=F('estimated_at'))</pre>`},
+{q:'annotate() vs aggregate()?',l:'mid',a:`<pre>from django.db.models import Count, Sum, F
+
+# aggregate — single summary dict for whole queryset
+Order.objects.aggregate(total=Sum('total_amount'))
+# {'total': 45600}
+
+# annotate — computed column per object
+Category.objects.annotate(cnt=Count('products'))
+# each Category gets .cnt attribute
+
+# F() in annotate — multiply fields
+Order.objects.annotate(total_price=F('total_amount') * F('quantity'))</pre>`},
+{q:'How does Django middleware work? Write a custom one.',l:'mid',a:`<pre>class TimingMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response   # called once at startup
+
+    def __call__(self, request):
+        import time; t = time.perf_counter()
+        response = self.get_response(request)
+        ms = (time.perf_counter()-t)*1000
+        response['X-Time'] = f"{ms:.1f}ms"
+        return response
+
+# Add to MIDDLEWARE list in settings.py
+# Order matters — wraps like an onion</pre>`},
+{q:'What is Celery and how to integrate with Django?',l:'mid',a:`<pre># celery.py
+app = Celery('myproject')
+app.config_from_object('django.conf:settings', namespace='CELERY')
+app.autodiscover_tasks()
+
+# tasks.py
+@shared_task
+def send_welcome_email(user_id):
+    user = User.objects.get(pk=user_id)
+    send_mail("Welcome!", "Hi!", "noreply@app.com", [user.email])
+
+# views.py — fire and forget
+send_welcome_email.delay(user.id)
+
+# Start worker:  celery -A myproject worker --loglevel=INFO --pool=solo
+# Start beat:    celery -A myproject beat -l INFO</pre>`},
+{q:'What is Redis and how is it used with Django?',l:'mid',a:`<p>Redis is an in-memory key-value store — used as cache, session store, Celery broker, pub/sub messaging, rate limiting.</p><pre>CACHES = {'default': {
+    'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+    'LOCATION': 'redis://127.0.0.1:6379/1',
+}}
+
+from django.core.cache import cache
+cache.set('user:1', data, timeout=300)
+data = cache.get('user:1')
+cache.delete('user:1')   # invalidate on update
+
+# Start redis: redis-cli -p 6379</pre>`},
+{q:'Django Forms vs DRF Serializers?',l:'core',a:`<table><tr><th>Aspect</th><th>Forms</th><th>Serializers</th></tr><tr><td>Context</td><td>HTML web forms</td><td>API requests/responses</td></tr><tr><td>Output</td><td>HTML widgets</td><td>JSON/XML</td></tr><tr><td>Data source</td><td>request.POST</td><td>request.data (any format)</td></tr><tr><td>Serialization</td><td>No</td><td>Yes — model ↔ JSON</td></tr></table>`},
+{q:'Nginx + Gunicorn + Supervisor explained.',l:'mid',a:`<p><strong>Nginx:</strong> Reverse proxy + static file server. Handles SSL, load balancing, forwards dynamic requests.</p><p><strong>Gunicorn:</strong> Python WSGI server. Runs Django with multiple worker processes. The bridge between Nginx and Django.</p><p><strong>Supervisor:</strong> Process manager. Keeps Gunicorn running, auto-restarts on crash, centralised logging.</p><p><strong>Flow:</strong> Client → Nginx (static files direct) → Gunicorn workers → Django → Nginx → Client.</p>`},
+{q:'What is ElasticSearch and when to use over SQL?',l:'senior',a:`<p>Elasticsearch is a distributed full-text search engine using inverted indexes. Finds documents by word in milliseconds at scale.</p><p>Use when: full-text search with relevance scoring, autocomplete, fuzzy matching. SQL <code>LIKE '%term%'</code> doesn't use indexes — very slow at scale.</p><pre>es.index(index="posts", id=post.id, body={"title": post.title, "body": post.body})
+results = es.search(index="posts", body={
+    "query": {"multi_match": {"query": "django rest", "fields": ["title^2","body"]}}
+})</pre>`},
+{q:'What is the difference between @classmethod, @staticmethod, @abstractmethod in Django?',l:'mid',a:`<p>In Django models, all three Python decorators apply the same way.</p><p><code>@classmethod</code> — factory method on the class itself. Common for custom querysets.</p><pre>class Product(models.Model):
+    @classmethod
+    def get_active(cls):
+        return cls.objects.filter(is_active=True)</pre><p><code>@staticmethod</code> — utility function with no class/instance state.</p><pre>    @staticmethod
+    def is_valid_price(price): return price > 0</pre><p><code>@abstractmethod</code> — in abstract base model classes, forces subclasses to implement the method.</p>`},
+]},
+{id:'cbv',label:'Django CBV',lk:'cbv',desc:'Class-Based Views — all types and customisation',questions:[
+{q:'What are Django Class-Based Views (CBVs)?',l:'core',a:`<p>CBVs organise views using OOP — inheritance and mixins replace long function bodies. Defined in <code>django.views.generic</code>.</p><p>Key built-in CBVs:</p><ul><li><code>View</code> — base class, define get/post manually</li><li><code>TemplateView</code> — renders a template</li><li><code>ListView</code> — list of objects</li><li><code>DetailView</code> — single object</li><li><code>CreateView</code> / <code>UpdateView</code> / <code>DeleteView</code> — CRUD forms</li><li><code>FormView</code> — custom form handling</li><li><code>RedirectView</code> — simple redirect</li></ul><p>Reference: <a href="https://ccbv.co.uk" target="_blank">ccbv.co.uk</a></p>`},
+{q:'How do you customise a ListView?',l:'core',a:`<pre>from django.views.generic import ListView
+from .models import Post
+
+class PostListView(ListView):
+    model             = Post
+    template_name     = 'posts/list.html'
+    context_object_name = 'posts'    # default is 'object_list'
+
+    def get_queryset(self):           # override to filter
+        return Post.objects.filter(is_active=True)
+
+    def get_context_data(self, **kwargs):   # add extra context
+        ctx = super().get_context_data(**kwargs)
+        ctx['total'] = self.get_queryset().count()
+        return ctx</pre>`},
+{q:'How do you customise a CreateView?',l:'core',a:`<pre>from django.views.generic.edit import CreateView
+
+class PostCreateView(CreateView):
+    model       = Post
+    fields      = ['title', 'body', 'category']
+    template_name = 'posts/form.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # inject user
+        return super().form_valid(form)
+
+    def get_success_url(self):    # dynamic redirect after save
+        return reverse('post_detail', kwargs={'pk': self.object.pk})</pre>`},
+{q:'How do you customise UpdateView and DeleteView?',l:'mid',a:`<pre>from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
+
+class PostUpdateView(UpdateView):
+    model   = Post
+    fields  = ['title', 'body']
+    template_name = 'posts/form.html'
+
+    def form_valid(self, form):
+        # custom logic before saving
+        return super().form_valid(form)
+
+class PostDeleteView(DeleteView):
+    model       = Post
+    template_name = 'posts/confirm_delete.html'
+    success_url = reverse_lazy('post_list')
+
+    def delete(self, request, *args, **kwargs):
+        # log deletion before it happens
+        return super().delete(request, *args, **kwargs)</pre>`},
+{q:'What are dispatch(), get(), post() overrides in CBV?',l:'mid',a:`<pre>class CustomView(View):
+    def dispatch(self, request, *args, **kwargs):
+        # Runs before get/post — good for auth checks
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('GET response')
+
+    def post(self, request, *args, **kwargs):
+        return HttpResponse('POST response')</pre>`},
+{q:'What are Archive Views (date-based) in Django CBV?',l:'senior',a:`<pre>from django.views.generic.dates import YearArchiveView
+
+class PostYearArchiveView(YearArchiveView):
+    model      = Post
+    date_field = 'created_at'
+    make_object_list = True
+
+    def get_queryset(self):
+        return Post.objects.filter(status='published')
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['year_summary'] = f"Posts in {self.get_year()}"
+        return ctx</pre><p>Also: <code>MonthArchiveView</code>, <code>DayArchiveView</code>, <code>WeekArchiveView</code>, <code>TodayArchiveView</code>.</p>`},
+]},
+{id:'drf',label:'DRF',lk:'drf',desc:'Serializers, viewsets, permissions, JWT, throttling, pagination',questions:[
+{q:'DRF CBV hierarchy — APIView → GenericAPIView → ViewSet?',l:'core',a:`<p><strong>APIView</strong> — base. Write get/post/put/delete manually. Most control, most code.</p><p><strong>GenericAPIView</strong> + Mixins — adds queryset/serializer_class. Concrete generics: <code>ListCreateAPIView</code>, <code>RetrieveUpdateDestroyAPIView</code>, <code>CreateAPIView</code>, <code>ListAPIView</code>, <code>RetrieveAPIView</code>, <code>UpdateAPIView</code>, <code>DestroyAPIView</code>.</p><p><strong>ViewSet</strong> → <code>GenericViewSet</code> → <code>ModelViewSet</code> / <code>ReadOnlyModelViewSet</code>. Use with Router for auto-URLs.</p><p>Reference: <a href="https://www.cdrf.co" target="_blank">cdrf.co</a></p>`},
+{q:'Field-level vs object-level validation in DRF?',l:'core',a:`<pre>class RegisterSerializer(serializers.Serializer):
+    password         = serializers.CharField()
+    confirm_password = serializers.CharField()
+
+    def validate_password(self, value):        # field-level
+        if len(value) < 8:
+            raise serializers.ValidationError("Min 8 chars")
+        return value
+
+    def validate(self, data):                  # object-level
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError("Passwords don't match")
+        return data</pre>`},
+{q:'What is SerializerMethodField?',l:'core',a:`<pre>class UserSerializer(serializers.ModelSerializer):
+    full_name  = serializers.SerializerMethodField()
+    post_count = serializers.SerializerMethodField()
+
+    def get_full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
+
+    def get_post_count(self, obj):
+        return obj.posts.count()   # N+1 risk in loops!
+
+    class Meta:
+        model = User; fields = ['id','full_name','post_count']</pre>`},
+{q:'DRF permissions — write a custom one.',l:'mid',a:`<pre>from rest_framework.permissions import BasePermission, SAFE_METHODS
+
+class IsOwnerOrReadOnly(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS: return True
+        return obj.owner == request.user
+
+class PostViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]</pre>`},
+{q:'Writable nested serializers?',l:'senior',a:`<pre>class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        order = Order.objects.create(**validated_data)
+        for item in items_data:
+            OrderItem.objects.create(order=order, **item)
+        return order
+
+    class Meta:
+        model = Order; fields = ['id','total','items']
+
+# DRF never auto-saves nested data — always override create()/update()</pre>`},
+{q:'Throttling in DRF?',l:'mid',a:`<pre>REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {'anon':'50/day','user':'500/day'}
+}
+
+class BurstThrottle(UserRateThrottle):
+    scope = 'burst'   # 'burst':'20/min' in settings</pre>`},
+{q:'JWT auth — access vs refresh tokens?',l:'mid',a:`<pre>pip install djangorestframework-simplejwt
+
+# urls.py
+path('token/',         TokenObtainPairView.as_view()),
+path('token/refresh/', TokenRefreshView.as_view()),
+
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+# Access token: short-lived (5-15 min), sent every request
+# Refresh token: long-lived (7-30 days), only to get new access</pre>`},
+{q:'DRF pagination types?',l:'mid',a:`<pre>class StandardPagination(PageNumberPagination):
+    page_size = 20; max_page_size = 100
+    page_size_query_param = 'page_size'
+    # ?page=2&page_size=20
+
+class MyViewSet(ModelViewSet):
+    pagination_class = StandardPagination
+
+# LimitOffsetPagination: ?limit=20&offset=40
+# CursorPagination: opaque cursor, best for large live datasets</pre>`},
+{q:'Custom @action on a ViewSet?',l:'mid',a:`<pre>from rest_framework.decorators import action
+from rest_framework.response import Response
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    @action(detail=True, methods=['post'])   # /products/1/activate/
+    def activate(self, request, pk=None):
+        product = self.get_object()
+        product.is_active = True
+        product.save()
+        return Response({'status': 'activated'})
+
+    @action(detail=False, methods=['get'])   # /products/featured/
+    def featured(self, request):
+        qs = Product.objects.filter(is_featured=True)
+        return Response(self.get_serializer(qs, many=True).data)</pre>`},
+{q:'DRF filtering with django-filter?',l:'mid',a:`<pre>pip install django-filter
+
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filterset_fields = ['category', 'is_active']
+    search_fields    = ['name', 'description']    # ?search=laptop
+    ordering_fields  = ['price', 'created_at']    # ?ordering=-price</pre>`},
+]},
+]},
+{id:'database',label:'Database',lk:'postgres',topics:[
+{id:'postgres',label:'PostgreSQL',lk:'postgres',desc:'Indexes, window functions, CTEs, pgvector, transactions',questions:[
+{q:'DBMS vs RDBMS — difference?',l:'core',a:`<table><tr><th>DBMS</th><th>RDBMS</th></tr><tr><td>Stores data as files</td><td>Stores data in tables (rows/columns)</td></tr><tr><td>Single user typically</td><td>Multi-user support</td></tr><tr><td>May not follow ACID</td><td>Follows ACID strictly</td></tr><tr><td>No client-server architecture</td><td>Supports client-server</td></tr><tr><td>No data correlation</td><td>Tables linked via foreign keys</td></tr></table>`},
+{q:'SQL vs NoSQL — difference?',l:'core',a:`<p><strong>SQL</strong> — relational, structured schema, tables + FK. Strong consistency. Best for: financial, enterprise, complex queries.</p><p><strong>NoSQL</strong> — schema-flexible (document, key-value, graph, column). Horizontal scaling. Best for: social feeds, IoT, real-time analytics, large volumes of changing data.</p>`},
+{q:'DELETE vs TRUNCATE vs DROP?',l:'core',a:`<p><code>DELETE</code> — removes rows; WHERE supported; logged; rollback possible; triggers fire.</p><p><code>TRUNCATE</code> — wipes all rows; fast; resets sequences; DDL; no triggers.</p><p><code>DROP</code> — removes entire table structure + data. Irreversible.</p><pre>DELETE FROM orders WHERE status='cancelled';  -- selective
+TRUNCATE TABLE sessions;    -- fast wipe all
+DROP TABLE temp_imports;    -- structure gone</pre>`},
+{q:'Primary key vs foreign key vs unique key?',l:'core',a:`<p><strong>PK</strong> — uniquely identifies row. Cannot be NULL. One per table. Auto-index.</p><p><strong>FK</strong> — references PK of another table. Enforces referential integrity.</p><p><strong>Unique key</strong> — all values unique. Can be NULL. Multiple per table. E.g. email, phone.</p><pre>CREATE TABLE orders (
+    id      SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    email   TEXT UNIQUE
+);</pre>`},
+{q:'Aggregate functions and WHERE vs HAVING?',l:'core',a:`<pre>SELECT department, COUNT(*) cnt, AVG(salary) avg
+FROM employees
+WHERE salary > 30000         -- filters rows BEFORE grouping
+GROUP BY department
+HAVING COUNT(*) > 5;         -- filters groups AFTER aggregation
+
+-- Aggregate functions: COUNT, SUM, AVG, MIN, MAX</pre>`},
+{q:'INNER JOIN vs LEFT JOIN vs SELF JOIN?',l:'core',a:`<pre>-- INNER JOIN — only matching rows in both
+SELECT u.name, o.total FROM users u
+INNER JOIN orders o ON u.id = o.user_id;
+
+-- LEFT JOIN — all users, NULL if no order
+SELECT u.name, o.total FROM users u
+LEFT JOIN orders o ON u.id = o.user_id;
+
+-- SELF JOIN — table joins itself (org chart)
+SELECT e.name AS emp, m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;
+
+-- Find same first_name, different email:
+SELECT a.id, a.email, b.email FROM auth_user a
+JOIN auth_user b ON a.first_name=b.first_name AND a.email!=b.email;</pre>`},
+{q:'Indexes in PostgreSQL?',l:'core',a:`<pre>CREATE INDEX idx_orders_user ON orders(user_id);
+
+-- Composite index
+CREATE INDEX idx_status_date ON orders(status, created_at DESC);
+
+-- Partial index (only rows you query)
+CREATE INDEX idx_pending ON orders(created_at) WHERE status='pending';
+
+-- Check if used:
+EXPLAIN ANALYZE SELECT * FROM orders WHERE user_id=42;</pre><p>Don't over-index — every index slows INSERT/UPDATE and uses storage.</p>`},
+{q:'Window Functions?',l:'mid',a:`<pre>SELECT name, department, salary,
+    RANK()  OVER (PARTITION BY department ORDER BY salary DESC) AS rank,
+    AVG(salary) OVER (PARTITION BY department) AS dept_avg,
+    LAG(salary) OVER (PARTITION BY department ORDER BY salary) AS prev
+FROM employees;
+
+-- Running total
+SELECT date, SUM(amount) OVER (ORDER BY date) AS running_total
+FROM sales;</pre><p>Compute across related rows without collapsing them like GROUP BY. Common: RANK, ROW_NUMBER, DENSE_RANK, LAG, LEAD, NTILE.</p>`},
+{q:'CTEs — regular and recursive?',l:'mid',a:`<pre>-- Regular CTE
+WITH monthly AS (
+    SELECT DATE_TRUNC('month', created_at) m, SUM(total) rev
+    FROM orders GROUP BY 1
+)
+SELECT * FROM monthly ORDER BY rev DESC LIMIT 3;
+
+-- Recursive CTE: category tree
+WITH RECURSIVE tree AS (
+    SELECT id, name, parent_id, 1 depth
+    FROM categories WHERE parent_id IS NULL
+    UNION ALL
+    SELECT c.id, c.name, c.parent_id, t.depth+1
+    FROM categories c JOIN tree t ON c.parent_id=t.id
+)
+SELECT * FROM tree ORDER BY depth;</pre>`},
+{q:'pgvector for AI/semantic search?',l:'senior',a:`<pre>CREATE EXTENSION vector;
+CREATE TABLE docs (id SERIAL, content TEXT, embedding vector(1536));
+
+-- Cosine similarity search
+SELECT content, 1-(embedding <=> '[0.1,0.2,...]'::vector) AS score
+FROM docs ORDER BY embedding <=> '[0.1,0.2,...]'::vector LIMIT 5;
+
+-- HNSW index for production speed
+CREATE INDEX ON docs USING hnsw (embedding vector_cosine_ops)
+WITH (m=16, ef_construction=64);</pre><p>Run semantic search directly in Postgres — no separate vector DB needed.</p>`},
+{q:'PostgreSQL isolation levels?',l:'senior',a:`<p><code>READ COMMITTED</code> (default) — each statement sees latest committed.</p><p><code>REPEATABLE READ</code> — consistent snapshot for whole transaction.</p><p><code>SERIALIZABLE</code> — full isolation, prevents all anomalies.</p><pre>BEGIN;
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+SELECT balance FROM accounts WHERE id=1;
+UPDATE accounts SET balance=balance-100 WHERE id=1;
+COMMIT;</pre>`},
+]},
+{id:'sql',label:'SQL',lk:'sql',desc:'SQL basics, joins, views, stored procedures, ACID',questions:[
+{q:'What is SQL and what are its types?',l:'core',a:`<p>SQL (Structured Query Language) is the standard language for RDBMS.</p><p><strong>DDL</strong> (Data Definition): CREATE, ALTER, DROP, TRUNCATE</p><p><strong>DML</strong> (Data Manipulation): SELECT, INSERT, UPDATE, DELETE</p><p><strong>DCL</strong> (Data Control): GRANT, REVOKE</p><p><strong>TCL</strong> (Transaction Control): COMMIT, ROLLBACK, SAVEPOINT</p>`},
+{q:'ACID properties?',l:'core',a:`<p><strong>Atomicity</strong> — all succeed or all rollback.</p><p><strong>Consistency</strong> — valid state before and after.</p><p><strong>Isolation</strong> — concurrent transactions don't interfere.</p><p><strong>Durability</strong> — committed data persists after crash.</p><pre>BEGIN;
+  UPDATE accounts SET balance=balance-500 WHERE id=1;
+  UPDATE accounts SET balance=balance+500 WHERE id=2;
+COMMIT;
+-- Any failure → ROLLBACK, both revert</pre>`},
+{q:'View vs Stored Procedure?',l:'mid',a:`<pre>-- View — saved SELECT as virtual table
+CREATE VIEW active_users AS
+SELECT id, name FROM users WHERE is_active=TRUE;
+SELECT * FROM active_users;
+
+-- Function/Stored Procedure — logic + parameters + can modify data
+CREATE FUNCTION get_orders(p_id INT)
+RETURNS TABLE(id INT, total DECIMAL) AS $$
+  SELECT id, total FROM orders WHERE user_id=p_id;
+$$ LANGUAGE sql;</pre>`},
+{q:'WHERE vs HAVING?',l:'core',a:`<pre>-- WHERE: filters rows BEFORE grouping
+SELECT department, COUNT(*) cnt
+FROM employees
+WHERE salary > 50000
+GROUP BY department;
+
+-- HAVING: filters groups AFTER aggregation
+SELECT department, COUNT(*) cnt
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 5;</pre>`},
+]},
+]},
+{id:'aws-g',label:'AWS',lk:'aws',topics:[
+{id:'aws',label:'AWS Services',lk:'aws',desc:'EC2, S3, SES, SNS, SQS, IAM, VPC, Route53, RDS',questions:[
+{q:'What is AWS and why is it popular?',l:'core',a:`<p>AWS (Amazon Web Services) is the world's largest cloud platform (started 2006). Pay-as-you-go model.</p><p><strong>Compute:</strong> EC2, Lambda, ECS. <strong>Storage:</strong> S3, EBS, Glacier.</p><p><strong>Database:</strong> RDS (MySQL, PostgreSQL, Oracle, MariaDB, SQL Server), DynamoDB, ElastiCache.</p><p><strong>Networking:</strong> VPC, Route 53, CloudFront, ELB. <strong>Messaging:</strong> SES, SNS, SQS.</p><p><strong>Popular because:</strong> scalability, cost-effectiveness, global infrastructure, pay-per-use.</p>`},
+{q:'What is EC2 and how does it work?',l:'core',a:`<p>EC2 (Elastic Compute Cloud) = resizable virtual servers in the cloud. Launch VMs with specific CPU, memory, storage, OS.</p><p>Benefits: scalability, elasticity, cost-effectiveness, wide range of instance types, security groups.</p><p><strong>Django deployment on EC2:</strong></p><ol><li>Launch Ubuntu instance, open ports 22/80/443</li><li>SSH in: install Python, nginx, gunicorn, supervisor</li><li>Clone project, install requirements</li><li>Configure gunicorn.conf for supervisor</li><li>Configure nginx to proxy to gunicorn socket</li></ol>`},
+{q:'S3 vs EBS — difference?',l:'core',a:`<p><strong>S3</strong> — object storage. Stores any file type. Accessed via internet/URL. Unlimited scale. For: images, backups, static files, datasets.</p><p><strong>EBS</strong> — block storage attached to EC2. Like a hard drive. High-performance I/O. For: databases, OS disk, application storage.</p><p>Think of S3 as Google Drive and EBS as your laptop hard drive.</p>`},
+{q:'How do you send email with Amazon SES?',l:'core',a:`<pre>import boto3
+ses = boto3.client('ses', region_name='us-east-1')
+ses.send_email(
+    Source='noreply@app.com',
+    Destination={'ToAddresses':['user@example.com']},
+    Message={
+        'Subject':{'Data':'Welcome!'},
+        'Body':{'Html':{'Data':'&lt;h1&gt;Hello!&lt;/h1&gt;'}}
+    }
+)
+# Verify domain/email first in SES console
+# Monitor: bounce &lt;0.1%, complaint &lt;0.08%</pre>`},
+{q:'S3 pre-signed URLs — GET vs PUT?',l:'mid',a:`<pre>s3 = boto3.client('s3')
+
+# GET — private file download URL
+get_url = s3.generate_presigned_url('get_object',
+    Params={'Bucket':'my-bucket','Key':'report.pdf'}, ExpiresIn=3600)
+
+# PUT — user uploads DIRECT to S3 (bypasses your server!)
+put_url = s3.generate_presigned_url('put_object',
+    Params={'Bucket':'my-bucket','Key':f'uploads/{uuid4()}.jpg',
+            'ContentType':'image/jpeg'}, ExpiresIn=300)</pre>`},
+{q:'SNS vs SQS — when to use each?',l:'core',a:`<p><strong>SNS</strong> — pub/sub. One event fans out to many subscribers simultaneously (email, Lambda, SQS, HTTP). Push model, no retention.</p><p><strong>SQS</strong> — queue. Messages wait for consumer to pull and process. Persistent (14 days). Pull model.</p><p>Classic pattern: SNS → multiple SQS queues. "order_placed" → warehouse + email + analytics queues independently.</p>`},
+{q:'Process SQS messages reliably in Python?',l:'mid',a:`<pre>sqs = boto3.client('sqs', region_name='us-east-1')
+URL = 'https://sqs.us-east-1.amazonaws.com/123/queue'
+
+while True:
+    resp = sqs.receive_message(
+        QueueUrl=URL, MaxNumberOfMessages=10,
+        WaitTimeSeconds=20,   # long polling — reduces cost
+        VisibilityTimeout=60) # hide from others for 60s
+    for msg in resp.get('Messages', []):
+        try:
+            process(json.loads(msg['Body']))
+            sqs.delete_message(QueueUrl=URL,
+                ReceiptHandle=msg['ReceiptHandle'])
+        except: pass   # returns after VisibilityTimeout
+# Set Dead Letter Queue for repeated failures</pre>`},
+{q:'How does Auto Scaling work in AWS?',l:'mid',a:`<p>Auto Scaling dynamically adjusts the number of EC2 instances based on traffic demand.</p><p>High traffic → adds instances (scale out). Low traffic → removes instances (scale in). Maintains availability while optimizing cost.</p><p>Configure: minimum, maximum, desired capacity + scaling policies (CPU > 70% → add instance).</p>`},
+{q:'EC2 vs Elastic Beanstalk?',l:'mid',a:`<p><strong>EC2</strong> — raw virtual server. Full control, full responsibility. You manage OS, software, scaling, security.</p><p><strong>Elastic Beanstalk</strong> — PaaS on top of EC2. Upload code, it provisions servers + load balancer + auto-scaling automatically. Easier but less control.</p><p>Use EC2 for fine-grained control. Beanstalk for faster deployment with less DevOps work.</p>`},
+{q:'IAM Role vs IAM User on EC2?',l:'mid',a:`<pre># IAM User = permanent keys — never put on EC2 (can leak!)
+# IAM Role = temporary creds auto-rotated by metadata service
+
+import boto3
+s3 = boto3.client('s3')           # auto-fetches role creds!
+s3.list_objects(Bucket='bucket')  # no keys in code</pre><p>Always use IAM Roles on EC2/ECS/Lambda. Apply least-privilege.</p>`},
+{q:'Amazon VPC and Route 53?',l:'mid',a:`<p><strong>VPC</strong> — isolated private network. Control IP ranges, subnets, routing, security groups. Public subnets for web servers, private for DBs (no internet access).</p><p><strong>Route 53</strong> — AWS DNS service. Register domains, route traffic to EC2/ALB/S3, health checks, failover routing.</p>`},
+{q:'How to store production secrets safely?',l:'senior',a:`<pre>import boto3, json
+sm  = boto3.client('secretsmanager', region_name='us-east-1')
+raw = sm.get_secret_value(SecretId='prod/myapp/db')
+cfg = json.loads(raw['SecretString'])
+DB_PASSWORD = cfg['password']
+
+# NEVER: ENV DB_PASSWORD=secret in Dockerfile (baked into image!)
+# NEVER: hardcoded keys in source code</pre>`},
+]},
+]},
+{id:'ai-ml',label:'AI / ML',lk:'genai',topics:[
+{id:'genai',label:'Gen AI & ML',lk:'genai',desc:'LLMs, prompting, RAG, agents, fine-tuning, ML types',questions:[
+{q:'What is AI vs ML? Types of machine learning?',l:'core',a:`<p><strong>AI</strong> — machines mimicking human intelligence (problem-solving, language, pattern recognition).</p><p><strong>ML</strong> — subset of AI: systems learn from data without explicit programming.</p><p><strong>Supervised Learning</strong> — labeled data. Regression (predict number: house price), Classification (predict category: spam/not-spam).</p><p><strong>Unsupervised Learning</strong> — unlabeled. Clustering (K-means: customer segmentation), Dimensionality reduction (PCA).</p><p><strong>Reinforcement Learning</strong> — agent learns by reward/penalty. AlphaGo, self-driving cars.</p>`},
+{q:'Basic steps in machine learning?',l:'core',a:`<ol><li><strong>Collect Data</strong> — gather from various sources</li><li><strong>Data Preprocessing</strong> — clean, normalize, transform</li><li><strong>Feature Engineering</strong> — extract meaningful features</li><li><strong>Model Selection</strong> — choose algorithm</li><li><strong>Training</strong> — train on training data</li><li><strong>Evaluation</strong> — test on unseen data</li><li><strong>Optimization</strong> — hyperparameter tuning</li><li><strong>Deployment</strong> — push to production</li></ol>`},
+{q:'What is scikit-learn? Classification example.',l:'core',a:`<pre>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
+
+emails = ["Win free iPhone!", "Meeting at 3pm?", "Buy Viagra!",
+          "Invoice attached", "You won a prize", "Lunch today?"]
+labels = [1, 0, 1, 0, 1, 0]   # 1=spam
+
+model = make_pipeline(CountVectorizer(), MultinomialNB())
+model.fit(emails, labels)
+model.predict(["Win cash now!"])  # [1]
+
+# Key features: classification, regression, clustering, preprocessing,
+# cross-validation, grid search</pre>`},
+{q:'Linear Regression example with sklearn?',l:'core',a:`<pre>import numpy as np
+from sklearn.linear_model import LinearRegression
+
+X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+y = np.array([2, 4, 5, 4, 5])
+
+model = LinearRegression()
+model.fit(X, y)
+y_pred = model.predict(X)
+print(model.coef_, model.intercept_)</pre>`},
+{q:'What is LangChain with example?',l:'core',a:`<p>Open-source framework for building LLM-powered applications. Provides: model connections, prompt engineering, chains, agents, memory.</p><pre>from langchain.chat_models import ChatOpenAI
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
+
+llm          = ChatOpenAI(temperature=0)
+memory       = ConversationBufferMemory()
+conversation = ConversationChain(llm=llm, memory=memory, verbose=True)
+
+r1 = conversation.predict(input="Hi, I'm Smit!")
+r2 = conversation.predict(input="What's my name?")
+print(r2)   # Remembers "Smit"</pre>`},
+{q:'What is Hugging Face and tokenizers?',l:'mid',a:`<p>"GitHub of ML" — pretrained models, datasets, Spaces. <code>transformers</code> library.</p><p>Tokenizer converts text → token IDs the model understands. Each model has its own vocabulary.</p><pre>from transformers import pipeline, AutoTokenizer
+
+clf = pipeline("sentiment-analysis")
+clf("I love building AI apps!")
+# [{'label':'POSITIVE','score':0.9998}]
+
+tok = AutoTokenizer.from_pretrained("bert-base-uncased")
+tok("Hello world!")
+# {'input_ids':[101,7592,2088,102]}</pre><p>Supports: NLP, computer vision, audio, multimodal tasks.</p>`},
+{q:'PyTorch vs TensorFlow?',l:'mid',a:`<table><tr><th>Aspect</th><th>PyTorch</th><th>TensorFlow</th></tr><tr><td>Graph</td><td>Dynamic (eager by default)</td><td>Originally static, now eager too</td></tr><tr><td>Debug</td><td>Standard Python tools</td><td>Harder with static graph</td></tr><tr><td>Research</td><td>Dominant in academia</td><td>Less common for research</td></tr><tr><td>Deployment</td><td>TorchScript, ONNX</td><td>TF Serving, TFLite, TF.js (more mature)</td></tr><tr><td>Visualisation</td><td>TensorBoardX (secondary)</td><td>Built-in TensorBoard</td></tr></table>`},
+{q:'What is Matplotlib?',l:'core',a:`<p>Popular Python library for creating static, interactive, and animated data visualisations.</p><pre>import matplotlib.pyplot as plt
+import numpy as np
+
+X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+y = np.array([2, 4, 5, 4, 5])
+
+plt.scatter(X, y, color='blue')    # actual data
+plt.plot(X, y_pred, color='red')   # model prediction
+plt.xlabel('X'); plt.ylabel('y')
+plt.title('Linear Regression')
+plt.show()</pre><p>Supports: line, scatter, bar, histogram, pie, 3D plots.</p>`},
+{q:'Foundation model vs fine-tuning vs RAG?',l:'core',a:`<p><strong>Foundation model</strong> — large pretrained (GPT-4, Claude, Llama). General knowledge, no private data.</p><p><strong>Fine-tuning</strong> — train further on your data. Changes style/behaviour. Expensive, hard to update.</p><p><strong>RAG</strong> — retrieve context at inference, inject into prompt. Fresh, easy to update, auditable. Preferred for production.</p><p>Decision order: prompting → RAG → fine-tuning.</p>`},
+{q:'Prompt engineering techniques?',l:'core',a:`<p><strong>Zero-shot:</strong> just describe the task.</p><p><strong>Few-shot:</strong> provide 2–5 input→output examples.</p><p><strong>Chain-of-thought:</strong> "Think step by step." Improves reasoning.</p><p><strong>System prompt:</strong> persona, constraints, output format.</p><p><strong>Structured output:</strong> request JSON with schema. Parse with Pydantic.</p><p><strong>ReAct:</strong> Reason + Act loop — think → tool → observe → think.</p>`},
+{q:'What are AI agents?',l:'mid',a:`<p><strong>Simple LLM call:</strong> input → output. One step.</p><p><strong>Agent:</strong> LLM + tools + loop. Reasons → calls tool → observes result → repeats until done.</p><p>Needs: tool definitions, execution loop (ReAct/LangGraph), stopping condition, memory.</p><p>Risks: infinite loops, prompt injection via tool results. Always set max_iterations.</p>`},
+]},
+{id:'langchain',label:'LangChain',lk:'langchain',desc:'LCEL, chains, RAG, tools, embeddings, memory',questions:[
+{q:'What is LCEL?',l:'core',a:`<pre>chain = (ChatPromptTemplate.from_template("Explain {topic}")
+       | ChatOpenAI(model="gpt-4o-mini")
+       | StrOutputParser())
+
+chain.invoke({"topic":"transformers"})         # sync
+chain.stream({"topic":"transformers"})          # stream tokens
+await chain.ainvoke({"topic":"transformers"})   # async</pre><p>Pipe-based composition unifying streaming, async, batching, tracing in one interface.</p>`},
+{q:'What is RAG and how to implement?',l:'core',a:`<pre>retriever = Chroma.from_documents(docs, OpenAIEmbeddings()).as_retriever(k=4)
+
+chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | ChatPromptTemplate.from_template("Context:\n{context}\n\nQ:{question}")
+    | ChatOpenAI() | StrOutputParser()
+)
+answer = chain.invoke("What is our refund policy?")</pre>`},
+{q:'Embeddings and semantic search?',l:'core',a:`<pre>emb = OpenAIEmbeddings()
+vec = emb.embed_query("machine learning")  # [1536 floats]
+
+results = vectorstore.similarity_search_with_score("supervised", k=5)
+for doc, score in results:
+    print(f"{score:.3f}: {doc.page_content[:60]}")</pre><p>Similar texts → nearby vectors. Foundation of RAG, clustering, deduplication.</p>`},
+{q:'@tool decorator and agent tool use?',l:'mid',a:`<pre>from langchain_core.tools import tool
+
+@tool
+def search_products(query: str) -> str:
+    """Search product catalogue for product questions."""
+    return db.search(query)
+
+@tool
+def get_order_status(order_id: str) -> str:
+    """Get current status of an order by ID."""
+    return orders_api.status(order_id)
+
+llm_with_tools = ChatOpenAI().bind_tools([search_products, get_order_status])
+# LLM reads docstrings to decide when to call each tool</pre>`},
+{q:'Memory types in LangChain?',l:'mid',a:`<p><code>ConversationBufferMemory</code> — all messages verbatim. Grows until context fills.</p><p><code>ConversationBufferWindowMemory(k=10)</code> — last k turns. Good balance.</p><p><code>ConversationSummaryMemory</code> — LLM compresses old history. Handles long sessions.</p><p>For production agents: use LangGraph TypedDict state — more explicit and debuggable.</p>`},
+]},
+{id:'langgraph',label:'LangGraph',lk:'langgraph',desc:'StateGraph, nodes, edges, supervisor, checkpointer',questions:[
+{q:'LangGraph vs LangChain chain?',l:'core',a:`<p>LangGraph = directed graph with optional cycles. Chains = linear DAG (no loops).</p><p>Graphs support: loops (retry/re-plan), branching, multi-agent coordination. Each node = Python function receiving state, returning partial update. Cycles enable ReAct loops.</p>`},
+{q:'StateGraph and state flow?',l:'core',a:`<pre>from typing import TypedDict, Annotated
+import operator
+
+class AgentState(TypedDict):
+    messages: Annotated[list, operator.add]  # append not replace
+    next: str
+
+def agent(state: AgentState) -> dict:
+    reply = llm.invoke(state["messages"])
+    return {"messages":[reply], "next":"tool" if reply.tool_calls else "end"}
+
+builder = StateGraph(AgentState)
+builder.add_node("agent", agent)
+builder.set_entry_point("agent")
+graph = builder.compile()</pre>`},
+{q:'Conditional edges and supervisor pattern?',l:'mid',a:`<pre>def route(state):
+    last = state["messages"][-1]
+    return "tools" if (hasattr(last,'tool_calls') and last.tool_calls) else "__end__"
+
+builder.add_conditional_edges("agent", route, {"tools":"tools","__end__":END})
+builder.add_edge("tools","agent")   # loop back
+
+# Supervisor pattern:
+def supervisor(state):
+    resp = llm.invoke([SystemMessage(
+        "Manage: researcher, coder. Who next? Or FINISH."
+    )] + state["messages"])
+    return {"next": resp.content.strip()}
+
+builder.add_conditional_edges("supervisor",
+    lambda s: s["next"], {"researcher":"researcher","FINISH":END})</pre>`},
+{q:'Checkpointer and human-in-the-loop?',l:'senior',a:`<pre>memory = SqliteSaver.from_conn_string(":memory:")
+graph  = builder.compile(checkpointer=memory,
+                          interrupt_before=["risky_action"])
+config = {"configurable":{"thread_id":"user-123"}}
+
+graph.invoke({"messages":[HumanMessage("Delete test users")]}, config)
+snapshot = graph.get_state(config)
+print("About to:", snapshot.next)   # inspect first
+graph.invoke(None, config)          # resume</pre>`},
+]},
+{id:'langsmith',label:'LangSmith',lk:'langsmith',desc:'Tracing, evaluation, datasets, prompt versioning',questions:[
+{q:'What is LangSmith and how to enable tracing?',l:'core',a:`<p>Observability + evaluation platform. Records every chain/agent run — prompts, outputs, latency, tokens, tool calls.</p><pre>os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_API_KEY"]    = "ls_..."
+os.environ["LANGCHAIN_PROJECT"]   = "my-chatbot"
+# Every chain.invoke() now automatically traced!
+
+from langsmith import traceable
+@traceable(name="custom-retriever")
+def fetch_docs(query): return vectorstore.similarity_search(query)</pre>`},
+{q:'Datasets and evaluation?',l:'mid',a:`<pre>client = Client()
+dataset = client.create_dataset("qa-v1")
+client.create_examples(
+    inputs=[{"q":"Return policy?"}],
+    outputs=[{"a":"14-day returns."}],
+    dataset_id=dataset.id
+)
+evaluator = LangChainStringEvaluator("criteria", config={
+    "criteria":"Is answer accurate and helpful?"
+})
+results = evaluate(chain.invoke, data=dataset,
+    evaluators=[evaluator], experiment_prefix="v3")</pre>`},
+]},
+{id:'autogen',label:'AutoGen',lk:'autogen',desc:'Multi-agent conversations, GroupChat, code execution',questions:[
+{q:'AutoGen vs LangGraph?',l:'core',a:`<p><strong>AutoGen</strong> (Microsoft) — agents communicate via messages. Emergent, easy to prototype, less control.</p><p><strong>LangGraph</strong> — explicit graph (nodes/edges/state). Deterministic, auditable, production-friendly.</p><p>AutoGen for rapid research prototyping. LangGraph for production systems.</p>`},
+{q:'Core agent types and GroupChat?',l:'core',a:`<pre>client    = OpenAIChatCompletionClient(model="gpt-4o")
+assistant = AssistantAgent("assistant", model_client=client,
+    system_message="You are a helpful coding assistant.")
+user_proxy = UserProxyAgent("user_proxy",
+    human_input_mode="NEVER",
+    code_execution_config={"use_docker":True,"work_dir":"coding"})
+
+# GroupChat — RoundRobin
+team = RoundRobinGroupChat([researcher, coder, critic], max_turns=12)
+# GroupChat — Selector (LLM picks next speaker)
+team = SelectorGroupChat([researcher, coder, critic],
+    model_client=client, max_turns=20)
+await team.run(task="Build a sales forecasting pipeline")</pre>`},
+{q:'Code execution safety risks?',l:'senior',a:`<p>UserProxyAgent auto-executes code from AssistantAgent — LLM could write malicious code.</p><p>Mitigations:</p><ul><li><code>use_docker:True</code> — isolated container execution</li><li><code>human_input_mode="ALWAYS"</code> — human approves before execution</li><li>Set <code>max_consecutive_auto_reply</code> to cap turns</li><li>Never mount cloud credentials in sandbox</li><li>Whitelist allowed imports</li></ul>`},
+]},
+]},
+{id:'frontend',label:'Frontend',lk:'react',topics:[
+{id:'react',label:'React',lk:'react',desc:'Hooks, state, routing, performance, patterns',questions:[
+{q:'What is React and its key features?',l:'core',a:`<p>Open-source JS library for building UIs (Facebook). Component-based — small reusable pieces.</p><p><strong>Virtual DOM:</strong> in-memory DOM. On state change, diffs old vs new, applies minimal real DOM updates → fast.</p><p><strong>One-way data flow:</strong> parent → child via props. Predictable state.</p><p><strong>JSX:</strong> HTML-like syntax in JS, compiled by Babel.</p><p><strong>SPA-friendly:</strong> React Router syncs URL with component tree without page reloads.</p>`},
+{q:'State vs props? Stateful vs stateless components?',l:'core',a:`<p><strong>Props</strong> — read-only, passed from parent. Immutable from child.</p><p><strong>State</strong> — internal mutable data. Change triggers re-render.</p><p><strong>Stateful component</strong> — manages its own state with hooks. For interactive features, forms, data fetching.</p><p><strong>Stateless/presentational</strong> — receives data via props only, purely renders UI. Easier to test and reuse.</p><pre>function Greeting({ name }) { return &lt;h1&gt;Hi {name}&lt;/h1&gt; }  // stateless
+function Counter() {                                           // stateful
+  const [count, setCount] = useState(0)
+  return &lt;button onClick={()=>setCount(c=>c+1)}&gt;{count}&lt;/button&gt;
+}</pre>`},
+{q:'useState vs useReducer?',l:'core',a:`<pre>// useState — simple values
+const [name, setName] = useState('')
+
+// useReducer — complex state, multiple related updates
+const reducer = (state, action) => {
+  switch(action.type) {
+    case 'SET_USER':    return {...state, user:action.payload}
+    case 'SET_LOADING': return {...state, loading:action.payload}
+    case 'RESET':       return initialState
+    default: return state
+  }
+}
+const [state, dispatch] = useReducer(reducer, {user:null, loading:false})
+dispatch({type:'SET_LOADING', payload:true})</pre>`},
+{q:'useEffect and dependency rules?',l:'core',a:`<pre>useEffect(() => {
+  const sub = subscribe(userId)
+  return () => sub.unsubscribe()   // cleanup on unmount / before re-run
+}, [userId])                        // dependency array
+
+// []       → once on mount only
+// [a, b]   → when a or b changes
+// no array → after EVERY render (usually a bug!)</pre><p>List every reactive value in deps. ESLint <code>eslint-plugin-react-hooks</code> enforces this.</p>`},
+{q:'useMemo and useCallback?',l:'mid',a:`<pre>// useMemo — memoize expensive computed value
+const filtered = useMemo(
+  () => items.filter(i => i.active && i.score > threshold),
+  [items, threshold])
+
+// useCallback — stable function reference
+const handleSubmit = useCallback(async (data) => {
+  await api.post('/submit', data)
+}, [])   // no deps = always same reference</pre><p>Don't add everywhere — overhead cost. Use when: memoized children need stable refs, or computation is measurably slow.</p>`},
+{q:'React Context — when NOT to use?',l:'mid',a:`<pre>const ThemeCtx = createContext('light')
+function App() {
+  const [theme, setTheme] = useState('light')
+  return (
+    &lt;ThemeCtx.Provider value={{theme, setTheme}}&gt;
+      &lt;DeepChild /&gt;
+    &lt;/ThemeCtx.Provider&gt;
+  )
+}
+const {theme} = useContext(ThemeCtx)  // any depth, no drilling</pre><p><strong>Don't use for high-frequency state</strong> — every consumer re-renders on every value change. Use Zustand/Jotai for frequent updates.</p>`},
+{q:'React Query (TanStack Query)?',l:'mid',a:`<pre>const {data, isLoading} = useQuery({
+  queryKey: ['user', userId],
+  queryFn:  () => api.getUser(userId),
+  staleTime: 5 * 60 * 1000
+})
+const qc = useQueryClient()
+const update = useMutation({
+  mutationFn: d => api.updateUser(userId, d),
+  onSuccess:  () => qc.invalidateQueries(['user',userId])
+})</pre><p>Caching, background refetch, deduplication, optimistic updates — replaces ~200 lines of useEffect.</p>`},
+{q:'React Router?',l:'core',a:`<pre>import {BrowserRouter, Routes, Route, Link, useParams} from 'react-router-dom'
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;nav&gt;&lt;Link to="/posts"&gt;Posts&lt;/Link&gt;&lt;/nav&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/"          element={&lt;Home/&gt;}/&gt;
+        &lt;Route path="/posts"     element={&lt;PostList/&gt;}/&gt;
+        &lt;Route path="/posts/:id" element={&lt;PostDetail/&gt;}/&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  )
+}
+function PostDetail() {
+  const {id} = useParams(); return &lt;div&gt;Post #{id}&lt;/div&gt;
+}</pre>`},
+{q:'All React Hooks?',l:'core',a:`<p><strong>Basic:</strong> <code>useState</code>, <code>useEffect</code>, <code>useContext</code>.</p><p><strong>Additional:</strong> <code>useReducer</code>, <code>useMemo</code>, <code>useCallback</code>, <code>useRef</code> (DOM ref / mutable value), <code>useLayoutEffect</code>, <code>useImperativeHandle</code>, <code>useDebugValue</code>.</p><p><strong>React 18+:</strong> <code>useTransition</code>, <code>useDeferredValue</code>, <code>useId</code>.</p><p><strong>Custom hooks:</strong> function starting with "use" that calls other hooks. Encapsulate reusable stateful logic.</p>`},
+{q:'Virtual DOM and reconciliation?',l:'core',a:`<p>VDOM = lightweight JS object mirroring real DOM. On state change, React diffs old vs new VDOM, applies minimal real DOM updates.</p><p>Reconciliation: different element type → rebuild. Same type → update attributes. Lists → use <code>key</code> prop (never use array index as key for dynamic lists).</p>`},
+{q:'HOC and React Fragments?',l:'mid',a:`<pre>// HOC — wraps component to add behaviour
+function withAuth(Component) {
+  return function Protected(props) {
+    const {user} = useAuth()
+    if (!user) return &lt;Navigate to="/login"/&gt;
+    return &lt;Component {...props}/&gt;
+  }
+}
+
+// Fragment — group without extra DOM node
+return &lt;&gt;&lt;Header/&gt;&lt;Main/&gt;&lt;Footer/&gt;&lt;/&gt;
+
+// Strict Mode — highlights potential problems in development
+// &lt;React.StrictMode&gt; wraps your app</pre>`},
+{q:'Lifecycle in React (class components)?',l:'mid',a:`<p><strong>Mounting:</strong> constructor → render → componentDidMount</p><p><strong>Updating:</strong> render → componentDidUpdate</p><p><strong>Unmounting:</strong> componentWillUnmount</p><p>In functional components with hooks: <code>useEffect</code> replaces all lifecycle methods.</p><pre>// Equivalent to componentDidMount:
+useEffect(() => { /* setup */ }, [])
+// Equivalent to componentWillUnmount:
+useEffect(() => { return () => { /* cleanup */ } }, [])
+// Equivalent to componentDidUpdate for 'count':
+useEffect(() => { /* runs when count changes */ }, [count])</pre>`},
+{q:'Code splitting and lazy loading?',l:'mid',a:`<pre>const Dashboard = lazy(() => import('./pages/Dashboard'))
+const Settings  = lazy(() => import('./pages/Settings'))
+
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;PageSkeleton/&gt;}&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/dashboard" element={&lt;Dashboard/&gt;}/&gt;
+      &lt;/Routes&gt;
+    &lt;/Suspense&gt;
+  )
+}</pre><p>Each page = separate JS chunk, loaded only when navigated to. Reduces initial bundle size → faster first load.</p>`},
+]},
+{id:'javascript',label:'JavaScript',lk:'javascript',desc:'ES6+, closures, async, Promise, event loop',questions:[
+{q:'var vs let vs const?',l:'core',a:`<p><code>var</code> — function-scoped, hoisted, redeclarable. Avoid in modern JS.</p><p><code>let</code> — block-scoped, hoisted (TDZ), reassignable, not redeclarable.</p><p><code>const</code> — block-scoped, must initialize, immutable binding (object contents still mutable).</p><pre>if (true) {
+  var x = 1    // leaks to function scope!
+  let y = 2    // block-scoped
+  const z = 3  // block-scoped, immutable binding
+}
+console.log(x)  // 1 — leaked!
+console.log(y)  // ReferenceError</pre><p>Best practice: <code>const</code> by default, <code>let</code> to reassign, never <code>var</code>.</p>`},
+{q:'Arrow functions vs regular functions?',l:'core',a:`<p><code>this</code>: arrow inherits from enclosing scope; regular has own <code>this</code> based on call site.</p><p><code>arguments</code>: arrow has none.</p><p><code>new</code>: arrow cannot be constructor.</p><pre>const obj = {
+  name: "Smit",
+  regular() { console.log(this.name) },   // "Smit"
+  arrow: () => console.log(this.name)     // undefined (outer this)
+}
+[1,2,3].map(x => x*2)  // arrow preferred for callbacks</pre>`},
+{q:'Promise vs async/await?',l:'mid',a:`<pre>// Promise — .then().catch() chaining
+fetch('/api').then(r=>r.json()).then(console.log).catch(console.error)
+
+// async/await — same, cleaner, easier to debug
+async function getData() {
+  try { return await (await fetch('/api')).json() }
+  catch(e) { console.error(e) }
+}
+
+// Concurrent requests:
+const [user, posts] = await Promise.all([getUser(), getPosts()])
+
+// Promise states: pending → fulfilled OR rejected (irreversible)</pre>`},
+{q:'What is a closure?',l:'mid',a:`<pre>function makeCounter(start=0) {
+  let count = start    // captured in closure
+  return {
+    inc: () => ++count,
+    dec: () => --count,
+    val: () => count,
+  }
+}
+const c = makeCounter(10)
+c.inc()  // 11 — count is private, only accessible via methods</pre><p>Closure = function remembers variables from outer scope after outer function returns. Enables: data privacy, factory functions.</p>`},
+{q:'JavaScript event loop?',l:'mid',a:`<pre>console.log('1')
+setTimeout(() => console.log('3'), 0)        // macro task queue
+Promise.resolve().then(() => console.log('2')) // microtask queue
+console.log('4')
+// Output: 1, 4, 2, 3
+// Microtasks (Promises) drain BEFORE macro tasks (setTimeout)</pre><p>Single-threaded. Event loop: Call Stack → Web APIs → Microtask/Task Queue → Call Stack.</p>`},
+{q:'Synchronous vs asynchronous in JavaScript?',l:'core',a:`<pre>// Sync — blocks thread
+function heavyCalc() { /* CPU blocking loop */ }
+
+// Async — non-blocking, event loop handles it
+async function loadData() {
+  const data = await fetch('/api')  // yields to event loop
+  return data.json()
+}</pre><p>JS is single-threaded. Async lets it handle many concurrent I/O operations via the event loop without blocking.</p>`},
+]},
+]},
+{id:'devops',label:'DevOps',lk:'docker',topics:[
+{id:'docker',label:'Docker',lk:'docker',desc:'Images, Compose, multi-stage builds, secrets, production',questions:[
+{q:'What is Docker?',l:'core',a:`<p>Containerisation platform — packages code + runtime + libraries + config into a portable unit running identically everywhere.</p><p>Solves: "works on my machine", dependency conflicts, slow VM-based deployment.</p><p><strong>Image</strong> — immutable layered blueprint (Dockerfile). <strong>Container</strong> — running instance. <strong>Docker Hub</strong> — image registry.</p>`},
+{q:'Multi-stage Docker build?',l:'mid',a:`<pre>FROM python:3.12 AS builder
+WORKDIR /build
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+FROM python:3.12-slim AS runtime
+WORKDIR /app
+COPY --from=builder /root/.local /root/.local
+COPY . .
+ENV PATH=/root/.local/bin:$PATH
+RUN adduser --disabled-password app
+USER app
+CMD ["gunicorn","myapp.wsgi","--bind","0.0.0.0:8000"]</pre><p>Builder ~1.4GB → Runtime ~180MB. Smaller = faster pulls, smaller attack surface, no build tools in prod.</p>`},
+{q:'Docker Compose — Django + Postgres + Redis?',l:'core',a:`<pre>services:
+  web:
+    build: .; ports:["8000:8000"]; env_file:.env
+    depends_on:
+      db: {condition:service_healthy}
+  db:
+    image:postgres:16-alpine
+    environment:{POSTGRES_PASSWORD:secret,POSTGRES_DB:myapp}
+    volumes:[pg_data:/var/lib/postgresql/data]
+    healthcheck:
+      test:["CMD","pg_isready","-U","postgres"]
+      interval:5s; retries:5
+  redis:
+    image:redis:7-alpine
+  celery:
+    build:.; command:celery -A myapp worker -l info
+volumes:{pg_data:}</pre>`},
+{q:'.dockerignore and secrets safety?',l:'mid',a:`<pre># .dockerignore — prevents secrets/bloat in image
+.git/ .env .env.* *.pyc __pycache__/ .pytest_cache/
+node_modules/ venv/ *.log .DS_Store
+
+# Never put secrets in Dockerfile ENV — baked into image layers!
+# Production: reference AWS Secrets Manager ARN in ECS task def
+# Dev only: docker run --env-file .env myapp</pre>`},
+{q:'Docker health check?',l:'mid',a:`<pre>HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD curl -f http://localhost:8000/health/ || exit 1</pre><p>Without health check, Docker marks container healthy as soon as process starts — even if still initialising. Orchestrators (ECS, K8s) route traffic only to healthy containers.</p>`},
+]},
+{id:'github',label:'GitHub / Git',lk:'github',desc:'Git commands, workflows, GitHub Actions CI/CD',questions:[
+{q:'Core git commands?',l:'core',a:`<pre>git add .                    # stage all changes
+git status                   # see what's staged/unstaged
+git commit -m "message"      # commit with message
+git pull                     # fetch + merge
+git push                     # push to remote
+
+# Undo tracked .pyc files:
+git rm --cached '*.pyc'
+git commit -m "Remove tracked .pyc files"
+
+# Config:
+git config --list</pre>`},
+{q:'git fetch vs git pull?',l:'core',a:`<p><code>git fetch</code> — downloads from remote, does NOT merge. Review changes with <code>git diff origin/main</code> first.</p><p><code>git pull</code> — fetch + merge in one step. Updates your working directory immediately.</p>`},
+{q:'git merge vs git rebase?',l:'core',a:`<pre># Merge — merge commit, preserves history, safe on shared branches
+git checkout main; git merge feature/login
+
+# Rebase — linear history, rewrites SHAs
+# NEVER rebase shared/pushed branches
+git checkout feature/login
+git rebase origin/main
+git push --force-with-lease   # safer than --force
+
+# Interactive rebase — squash/reword
+git rebase -i HEAD~4</pre>`},
+{q:'git stash, cherry-pick, bisect?',l:'mid',a:`<pre>git stash push -m "WIP: payment form"
+git stash pop             # apply + remove
+
+git cherry-pick abc1234   # apply one commit to current branch
+
+# Find which commit introduced a bug:
+git bisect start
+git bisect bad            # current = broken
+git bisect good v2.1.0    # this tag was working
+# Git binary-searches — test each commit, mark good/bad</pre>`},
+{q:'GitHub Actions CI workflow?',l:'mid',a:`<pre># .github/workflows/ci.yml
+name: CI
+on: {push:{branches:[main]}, pull_request:{branches:[main]}}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: {POSTGRES_PASSWORD:test,POSTGRES_DB:testdb}
+        options: --health-cmd pg_isready
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version:'3.12'}
+      - run: pip install -r requirements.txt
+      - run: pytest --cov=. --cov-fail-under=80
+        env: {DATABASE_URL:postgresql://postgres:test@localhost/testdb}</pre>`},
+{q:'Branch protection rules?',l:'mid',a:`<p>For <code>main</code>: require 2 PR approvals, all CI checks pass, branch up-to-date before merge, dismiss stale reviews, block direct pushes, require signed commits.</p><p>Merge strategy: squash merge to main — one clean commit per feature.</p>`},
+]},
+{id:'nginx-deploy',label:'Nginx / Deploy',lk:'nginx',desc:'Nginx, Supervisor, Gunicorn, WhiteNoise, PythonAnywhere',questions:[
+{q:'What is Nginx and its role with Django?',l:'core',a:`<p>High-performance web server and reverse proxy. In Django production stack:</p><ul><li><strong>Serves static files</strong> directly (CSS, JS, images) — never hits Django</li><li><strong>Reverse proxy</strong> — receives requests, forwards to Gunicorn</li><li><strong>Load balancing</strong> — distributes across multiple Gunicorn instances</li><li><strong>SSL/TLS termination</strong> — handles HTTPS encryption</li><li><strong>Caching</strong> — caches frequently accessed content</li></ul>`},
+{q:'What is Gunicorn and Supervisor?',l:'core',a:`<p><strong>Gunicorn</strong> — Python WSGI server. The bridge between Nginx and Django. Spawns multiple worker processes to handle requests concurrently.</p><p><strong>Supervisor</strong> — process control daemon. Ensures Gunicorn stays running, auto-restarts on crash, centralised logging.</p><pre>[program:gunicorn]
+directory=/home/ubuntu/myproject
+command=/home/ubuntu/venv/bin/gunicorn --workers 3 \
+        --bind unix:/home/ubuntu/myproject/app.sock \
+        myproject.wsgi:application
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/gunicorn/gunicorn.err.log</pre>`},
+{q:'How Nginx + Gunicorn + Supervisor work together?',l:'core',a:`<p>Think of it as a restaurant:</p><ul><li><strong>Nginx (Greeters)</strong> — welcome requests, serve static menus (files) directly, send food orders (dynamic requests) to the kitchen</li><li><strong>Gunicorn (Chefs)</strong> — cook up responses using Django, multiple workers handle simultaneous orders</li><li><strong>Supervisor (Managers)</strong> — ensure chefs always on duty, restart if they crash, log everything</li></ul><p>Flow: Client → Nginx → Gunicorn workers → Django → Nginx → Client</p>`},
+{q:'How to set up WhiteNoise for static files?',l:'core',a:`<pre>pip install whitenoise
+
+# settings.py
+INSTALLED_APPS = ['whitenoise.runserver_nostatic', 'django.contrib.staticfiles', ...]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',    # add here
+    ...
+]
+
+STATIC_URL  = '/static/'
+STATIC_ROOT = BASE_DIR / 'static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Collect static files:
+python manage.py collectstatic</pre><p>Run <code>collectstatic</code> every time you change static files.</p>`},
+]},
+]},
+];
+
+/* ===== SETUP FOLDER (separate) ===== */
+const SETUP_GROUPS=[{id:'setup-g',label:'Setup',lk:'deploy',topics:[
+{id:'setup-all',label:'Setup Guides',lk:'deploy',desc:'EC2 · PythonAnywhere · WhiteNoise · Git — all in one place',sections:[
+{
+  title:'🖥️ EC2 Django Deployment',
+  subtitle:'Full step-by-step guide to deploy Django on AWS EC2 with Nginx + Gunicorn + Supervisor',
+  body:`<p><strong>Reference video:</strong> <a href="https://youtu.be/7O1H9kr1CsA" target="_blank">youtu.be/7O1H9kr1CsA</a> &nbsp;|&nbsp; <strong>Django+React on EC2:</strong> <a href="https://www.youtube.com/watch?v=kd3ONndC_Mw" target="_blank">youtube.com/watch?v=kd3ONndC_Mw</a></p>
+<p><strong>Also setup:</strong> Static &amp; media files with S3 → <a href="https://www.youtube.com/watch?v=JQVQcNN0cXE" target="_blank">tutorial</a> &nbsp;|&nbsp; PostgreSQL with Render (FREE) → <a href="https://www.youtube.com/watch?v=AgTr5mw4zdI" target="_blank">tutorial</a></p>
+<pre>
+# ── STEP 1: Update Ubuntu ─────────────────────────────
+sudo apt-get update
+sudo apt-get upgrade
+# Press Enter if a pink popup appears
+
+# ── STEP 2: Setup Python environment ──────────────────
+sudo apt-get install python3-venv
+python3 -m venv venv
+source venv/bin/activate
+pip3 install django
+
+# ── STEP 3: Clone and install your project ────────────
+git clone https://github.com/your-username/your-project.git
+cd your-project
+pip install -r requirements.txt
+cd ..
+
+# ── STEP 4: Install server stack ──────────────────────
+sudo apt-get install -y nginx
+pip install gunicorn
+sudo apt-get install supervisor
+
+# ── STEP 5: Configure Supervisor ──────────────────────
+cd /etc/supervisor/conf.d/
+sudo touch gunicorn.conf
+sudo nano gunicorn.conf
+
+# Paste this inside gunicorn.conf:
+[program:gunicorn]
+directory=/home/ubuntu/your-project
+command=/home/ubuntu/venv/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/your-project/app.sock your-project.wsgi:application
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/gunicorn/gunicorn.err.log
+stdout_logfile=/var/log/gunicorn/gunicorn.out.log
+
+[group:guni]
+programs:gunicorn
+
+# Save: Ctrl+O → Enter → Ctrl+X
+
+sudo mkdir /var/log/gunicorn
+sudo supervisorctl reread     # → response: "guni: available"
+sudo supervisorctl update     # → response: "guni: added process group"
+sudo supervisorctl status     # → should show: RUNNING
+
+# ── STEP 6: Configure Nginx ───────────────────────────
+cd /etc/nginx
+sudo nano nginx.conf
+# Change:  user www-data   →   user root
+# Save: Ctrl+O → Enter → Ctrl+X
+
+cd sites-available
+sudo touch django.conf
+sudo nano django.conf
+
+# Paste this (replace IP with your AWS public IP):
+server {
+    listen 80;
+    server_name 13.235.42.17;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/your-project/app.sock;
+    }
+}
+
+# Save: Ctrl+O → Enter → Ctrl+X
+
+sudo nginx -t
+sudo ln django.conf /etc/nginx/sites-enabled
+sudo service nginx restart
+
+# ── TROUBLESHOOTING ───────────────────────────────────
+# 502 Bad Gateway? → Run project with runserver to find bug
+# EC2 on Ubuntu with remote desktop: https://stackoverflow.com/questions/50100360
+# EC2 on Windows with remote desktop: https://k21academy.com/amazon-web-services/aws-ec2-instance/</pre>`
+},
+{
+  title:'🐍 PythonAnywhere Deployment',
+  subtitle:'Step-by-step guide to deploy Django on PythonAnywhere',
+  body:`<p><strong>Reference:</strong> <a href="https://youtu.be/xtnUwvjOThg" target="_blank">youtu.be/xtnUwvjOThg</a></p>
+<pre>
+# ── In Bash Console ───────────────────────────────────
+# 'pwd' → shows current path
+# 'ls'  → lists files
+
+git clone https://github.com/your-username/your-project.git
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt     # path: /your-project/backend/
+python manage.py collectstatic
+
+# ── In PythonAnywhere Web Section ─────────────────────
+# 1. Set Virtualenv path:
+#    Virtualenv: /home/your-username/venv
+
+# 2. Edit WSGI file at:
+#    /var/www/your-username_pythonanywhere_com_wsgi.py
+#    Replace its contents with:
+
+import os
+import sys
+
+path = '/home/your-username/your-project/backend'
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'backend.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+# ── If admin panel UI is broken after collectstatic ───
+# Add WhiteNoise (see WhiteNoise section below)</pre>`
+},
+{
+  title:'⬜ WhiteNoise — Static Files Setup',
+  subtitle:'Serve static files properly in production without a separate static server',
+  body:`<pre>
+# ── OPTION A: Quick setup (recommended) ──────────────
+pip install whitenoise
+
+# In settings.py → INSTALLED_APPS:
+INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
+    'django.contrib.staticfiles',
+    ...
+]
+
+# In settings.py → MIDDLEWARE (add right after SecurityMiddleware):
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',    # ← add here
+    ...
+]
+
+# In settings.py → Static files config:
+STATIC_URL  = '/static/'
+STATIC_ROOT = BASE_DIR / 'static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Collect all static files:
+python manage.py collectstatic
+# Run this every time you change any static file!
+
+# ── OPTION B: Using static template tags ─────────────
+# Always use {% static %} tag — never hardcode /static/ URLs
+{% load static %}
+&lt;img src="{% static 'images/hi.jpg' %}" alt="Hi!"&gt;
+
+&lt;!-- DON'T write this: --&gt;
+&lt;img src="/static/images/hi.jpg" alt="Hi!"&gt;
+
+# ── OPTION C: wsgi.py integration ────────────────────
+# In wsgi.py, replace get_wsgi_application() with:
+from whitenoise import WhiteNoise
+
+application = get_wsgi_application()
+application = WhiteNoise(application, root='/path/to/your/static/')
+
+# ── Storage options ───────────────────────────────────
+# Compress + cache-busting (recommended for production):
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Compress only (no cache-busting):
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# ⚠️  Important: run collectstatic every time you change static files</pre>`
+},
+{
+  title:'🐙 Git Commands & Setup',
+  subtitle:'Common git commands, authentication token setup, and fixes',
+  body:`<pre>
+# ── Daily Git Commands ────────────────────────────────
+git add .
+git status
+git commit -m "your commit message"
+git pull
+git push
+
+# ── Authentication Token Setup ────────────────────────
+# GitHub removed password authentication — use a Personal Access Token
+# Generate one at: https://github.com/settings/tokens/new
+# When git asks for password → paste the token instead
+# More info: https://stackoverflow.com/questions/68775869
+
+# ── Remove tracked .pyc / cache files ────────────────
+git rm --cached '*.pyc'
+git commit -m "Remove tracked .pyc files"
+
+git add .gitignore
+git commit -m "Update .gitignore to ignore .pyc files"
+git push origin main
+
+git config --list     # see all git config settings
+
+# ── Fix: frontend folder not adding to git ────────────
+# Problem: git treats frontend folder as a submodule
+# (because it has its own .git folder inside)
+#
+# Solution:
+# Step 1: Delete the .git folder inside your frontend folder manually
+# Step 2:
+git rm --cached YourFrontendFolderName
+# Step 3:
+git add YourFrontendFolderName
+# Step 4:
+git push
+#
+# Note: run all commands from the root folder
+# (where both frontend and backend folders are located)</pre>`
+},
+]},
+]}];
+
+
+
+/* ===== SETUP STEPS DATA ===== */
+
+/* ===== STATE ===== */
+let activeGid='python', activeTid='core-python', filter='all', openSet=new Set();
+let isSetupMode=false;
+const svg=key=>`<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">${L[key]||''}</svg>`;
+const allTopics=()=>GROUPS.flatMap(g=>g.topics);
+const allSetupTopics=()=>SETUP_GROUPS.flatMap(g=>g.topics);
+const getTopic=id=>[...allTopics(),...allSetupTopics()].find(t=>t.id===id);
+const getGroupList=()=>isSetupMode?SETUP_GROUPS:GROUPS;
+
+/* ===== BUILD TAB RAIL ===== */
+const rail=document.getElementById('tab-rail');
+GROUPS.forEach((g,i)=>{
+  if(i>0){const d=document.createElement('div');d.className='tab-sep';rail.appendChild(d)}
+  const btn=document.createElement('button');
+  btn.className='tab-btn'+(g.id===activeGid?' active':'');
+  btn.dataset.gid=g.id;
+  btn.dataset.mode='interview';
+  btn.innerHTML=`<div class="tab-icon">${svg(g.lk)}</div><span class="tab-lbl">${g.label}</span>`;
+  btn.title=g.label;
+  btn.addEventListener('click',()=>selectGroup(g.id,false));
+  rail.appendChild(btn);
+});
+// Divider then Setup folder tabs
+(function(){
+  const sep=document.createElement('div');sep.className='tab-sep';sep.style.cssText='margin:6px 0;background:rgba(99,102,241,.3)';rail.appendChild(sep);
+  SETUP_GROUPS.forEach((g,i)=>{
+    if(i>0){const d=document.createElement('div');d.className='tab-sep';rail.appendChild(d)}
+    const btn=document.createElement('button');
+    btn.className='tab-btn';
+    btn.dataset.gid=g.id;
+    btn.dataset.mode='setup';
+    btn.innerHTML=`<div class="tab-icon">${svg(g.lk)}</div><span class="tab-lbl">${g.label}</span>`;
+    btn.title='Setup Guides';
+    btn.addEventListener('click',()=>selectGroup(g.id,true));
+    rail.appendChild(btn);
+  });
+}());
+/* ===== RENDER SIDEBAR ===== */
+function renderSidebar(){
+  const g=getGroupList().find(x=>x.id===activeGid);
+  if(!g)return;
+  document.getElementById('sb-grp').textContent=g.label;
+  const q=document.getElementById('sb-input').value.toLowerCase().trim();
+  const list=document.getElementById('sb-list');
+  list.innerHTML='';
+  g.topics.forEach(tp=>{
+    if(q && !tp.label.toLowerCase().includes(q)) return;
+    const btn=document.createElement('button');
+    const isSetupTp = activeGid==='setup-g';
+    btn.className='tp-btn'+(isSetupTp?' setup-tp':'')+(tp.id===activeTid?' active':'');
+    btn.dataset.tid=tp.id;
+    const qCount = tp.steps ? tp.steps.length : (tp.questions ? tp.questions.length : 0);
+    btn.innerHTML=`<div class="tp-ico">${svg(tp.lk)}</div>${tp.label}<span class="tp-qn">${qCount}</span>`;
+    btn.addEventListener('click',()=>selectTopic(tp.id));
+    list.appendChild(btn);
+  });
+}
+
+/* ===== RENDER CONTENT ===== */
+function renderContent(){
+  openSet.clear();
+  const tp=getTopic(activeTid);
+  if(!tp)return;
+  clearGS();
+
+  document.getElementById('tb-ico').innerHTML=svg(tp.lk);
+  document.getElementById('tb-title').textContent=tp.label;
+  document.getElementById('tb-desc').textContent=tp.desc||'';
+
+  const contentEl=document.getElementById('content');
+  const questions = tp.questions||[];
+  const sections  = tp.sections||[];
+  const steps     = tp.steps||[];
+
+  const total = questions.length + sections.length + steps.length;
+  const core  = questions.filter(q=>q.l==='core').length;
+  const ms    = questions.filter(q=>q.l!=='core').length;
+
+  const isSetup = sections.length > 0;
+
+  contentEl.innerHTML=`
+    <div class="st-row">
+      <div class="st-box"><div class="st-val">${total}</div><div class="st-lbl">${isSetup?'sections':'questions'}</div></div>
+      <div class="st-box"><div class="st-val" style="color:var(--ok)">${isSetup?sections.length:core}</div><div class="st-lbl">${isSetup?'setup guides':'core'}</div></div>
+      <div class="st-box"><div class="st-val" style="color:var(--warn)">${isSetup?0:ms}</div><div class="st-lbl">${isSetup?'—':'mid+senior'}</div></div>
+    </div>
+    <div class="s-hdr">
+      <div class="s-hdr-ico">${svg(tp.lk)}</div>
+      <div class="s-hdr-info"><h2>${tp.label}</h2><p>${tp.desc||''}</p></div>
+      ${!isSetup?`<div class="s-actions">
+        <button class="sa" onclick="expandAll()">expand all</button>
+        <button class="sa" onclick="collapseAll()">collapse all</button>
+      </div>`:''}
+    </div>
+    <div id="sections-list"></div>
+    <div id="step-list"></div>
+    <div id="q-list"></div>
+  `;
+
+  // Render setup sections (full content cards — no accordion)
+  if(sections.length){
+    const sl=document.getElementById('sections-list');
+    sections.forEach((sec,si)=>{
+      const card=document.createElement('div');
+      card.className='setup-section-card';
+      card.innerHTML=`
+        <div class="setup-sec-hdr">
+          <div class="setup-sec-title">${sec.title}</div>
+          <div class="setup-sec-sub">${sec.subtitle||''}</div>
+        </div>
+        <div class="setup-sec-body">${sec.body}</div>
+      `;
+      sl.appendChild(card);
+    });
+  }
+
+  // Render old-style steps (accordion) if any
+  if(steps.length){
+    const sl=document.getElementById('step-list');
+    steps.forEach((s,si)=>{
+      const key=`step-${activeTid}-${si}`;
+      const card=document.createElement('div');
+      card.className='step-card';
+      card.dataset.key=key;
+      card.innerHTML=`
+        <button class="step-trig" onclick="toggleStep('${key}')">
+          <div class="step-num">${si+1}</div>
+          <div class="step-text">${s.title}</div>
+          <svg class="step-chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="5,7 10,13 15,7"/></svg>
+        </button>
+        <div class="step-ans">${s.body}</div>
+      `;
+      sl.appendChild(card);
+    });
+  }
+
+  // Render interview questions
+  const ql=document.getElementById('q-list');
+  questions.forEach((q,qi)=>{
+    const key=`${activeTid}-${qi}`;
+    const bc=q.l==='senior'?'bs':q.l==='mid'?'bm':'bc';
+    const bl=q.l==='senior'?'senior':q.l==='mid'?'mid':'core';
+    const card=document.createElement('div');
+    card.className='q-card';
+    card.dataset.key=key; card.dataset.level=q.l;
+    card.dataset.text=q.q.toLowerCase();
+    card.innerHTML=`
+      <button class="q-trig" onclick="toggleCard('${key}')">
+        <div class="q-left">
+          <div class="q-num">${qi+1}</div>
+          <span class="badge ${bc}">${bl}</span>
+        </div>
+        <div class="q-text">${q.q}</div>
+        <svg class="q-chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="5,7 10,13 15,7"/></svg>
+      </button>
+      <div class="q-ans">${q.a}</div>
+    `;
+    ql.appendChild(card);
+  });
+
+  updateStats(); applyFilter();
+}
+
+/* ===== INTERACTIONS ===== */
+function selectGroup(gid, setupMode){
+  isSetupMode=!!setupMode;
+  activeGid=gid;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.gid===gid));
+  const groups=isSetupMode?SETUP_GROUPS:GROUPS;
+  const g=groups.find(x=>x.id===gid);
+  if(g?.topics?.length){ activeTid=g.topics[0].id; }
+  renderSidebar();
+  renderContent();
+}
+
+function selectTopic(tid){
+  activeTid=tid;
+  document.querySelectorAll('.tp-btn').forEach(b=>b.classList.toggle('active',b.dataset.tid===tid));
+  renderContent();
+}
+
+function toggleCard(key){
+  const c=document.querySelector(`[data-key="${key}"]`);
+  if(!c)return;
+  if(c.classList.contains('open')){c.classList.remove('open');openSet.delete(key);}
+  else{c.classList.add('open');openSet.add(key);}
+  updateStats();
+}
+
+function toggleStep(key){
+  const c=document.querySelector(`[data-key="${key}"]`);
+  if(!c)return;
+  c.classList.toggle('open');
+  updateStats();
+}
+
+function expandAll(){
+  document.querySelectorAll('#q-list .q-card').forEach(c=>{
+    if(c.style.display!=='none'){c.classList.add('open');openSet.add(c.dataset.key);}
+  });
+  document.querySelectorAll('.step-card').forEach(c=>c.classList.add('open'));
+  updateStats();
+}
+
+function collapseAll(){
+  document.querySelectorAll('#q-list .q-card').forEach(c=>{c.classList.remove('open');openSet.delete(c.dataset.key);});
+  document.querySelectorAll('.step-card').forEach(c=>c.classList.remove('open'));
+  updateStats();
+}
+
+function setFilter(f){
+  filter=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  const m={all:'fa',core:'fc',mid:'fm',senior:'fs'};
+  document.querySelector('.'+m[f])?.classList.add('on');
+  applyFilter();
+}
+
+function applyFilter(){
+  let vis=0;
+  document.querySelectorAll('#q-list .q-card').forEach(c=>{
+    const show=filter==='all'||c.dataset.level===filter;
+    c.style.display=show?'':'none';
+    if(show)vis++;
+  });
+  const steps=document.querySelectorAll('#step-list .step-card').length;
+  document.getElementById('s-vis').textContent=vis+steps;
+  updateStats();
+}
+
+function updateStats(){
+  const open=document.querySelectorAll('.q-card.open,.step-card.open').length;
+  document.getElementById('s-open').textContent=open;
+}
+
+/* ===== GLOBAL SEARCH ===== */
+function globalSearch(query){
+  const q=query.trim().toLowerCase();
+  const panel=document.getElementById('gsearch-panel');
+  const content=document.getElementById('content');
+  const clear=document.getElementById('gsclear');
+
+  if(!q){
+    panel.classList.remove('show');
+    content.style.display='';
+    clear.classList.remove('show');
+    return;
+  }
+  clear.classList.add('show');
+  panel.classList.add('show');
+  content.style.display='none';
+
+  const results=[];
+  [...GROUPS,...SETUP_GROUPS].forEach(g=>{
+    g.topics.forEach(tp=>{
+      (tp.questions||[]).forEach(question=>{
+        if(question.q.toLowerCase().includes(q)||question.a.toLowerCase().includes(q)){
+          results.push({group:g.label, topic:tp.label, topicId:tp.id, groupId:g.id, q:question});
+        }
+      });
+    });
+  });
+
+  if(!results.length){
+    panel.innerHTML=`<div class="gs-empty">No results for "<strong>${escHtml(query)}</strong>"</div>`;
+    return;
+  }
+
+  const hl=txt=>{
+    if(!q)return escHtml(txt);
+    const re=new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+    return escHtml(txt).replace(re,'<mark>$1</mark>');
+  };
+  const stripHtml=h=>h.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,200);
+
+  panel.innerHTML=`<div class="gs-count">${results.length} result${results.length!==1?'s':''} for "<strong>${escHtml(query)}</strong>"</div>`
+    +results.map(r=>`
+    <div class="gs-result">
+      <div class="gs-r-hdr">
+        <span>${r.group}</span>
+        <span>›</span>
+        <span class="gs-topic">${r.topic}</span>
+        <span class="badge ${r.q.l==='senior'?'bs':r.q.l==='mid'?'bm':'bc'}" style="margin-left:auto">${r.q.l}</span>
+      </div>
+      <div class="gs-r-body">
+        <div class="gs-r-q" onclick="goToQuestion('${r.groupId}','${r.topicId}')">${hl(r.q.q)}</div>
+        <div class="gs-r-ans">${hl(stripHtml(r.q.a))}</div>
+      </div>
+    </div>`).join('');
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function goToQuestion(gid,tid){
+  clearGS();
+  const isSetup = SETUP_GROUPS.some(g=>g.id===gid);
+  selectGroup(gid, isSetup);
+  selectTopic(tid);
+}
+
+function clearGS(){
+  document.getElementById('gsearch').value='';
+  document.getElementById('gsclear').classList.remove('show');
+  document.getElementById('gsearch-panel').classList.remove('show');
+  document.getElementById('content').style.display='';
+}
+
+// Ctrl+K shortcut
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){
+    e.preventDefault();
+    document.getElementById('gsearch').focus();
+  }
+});
+
+/* ===== INIT ===== */
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
